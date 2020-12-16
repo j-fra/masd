@@ -7,7 +7,7 @@ Double-click this file to open the R-project. This will set your working directo
 We used the `renv`-package for dependency management. The json-formatted `renv.lock` file lists all packages we used including their versions. When in the root-directory of the project, the packages can be installed using `renv::restore()`. 
 
 # results (FOLDER)
-This folder stores intermediate and final results objects, such as dataframes stored as .Rda objects, Word tables, or exported figures. 
+This folder stores intermediate and final results objects, such as dataframes stored as .Rda objects, Word tables, or exported figures. The names of results files usually correspond to the names of the R scripts that created them. 
 
 # code (FOLDER)
 This folder contains all data processing and analysis code. The numbering from 01 to 04 indicates potential dependency: Scripts starting with 04 depend on output from scripts starting with 03, and so forth. Intermediate datasets are stored as .Rda files in the `results/` directory. Tables are stored as Word-documents in `results/figures and tables/`. Figures are stored as PNG files in the same folder. 
