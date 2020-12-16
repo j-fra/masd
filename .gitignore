@@ -1,5 +1,7 @@
 manuscript/
 .Rproj.user
+.Rhistory
+desktop.ini
 data/additional/
 data/prepared/
 data/removed/
