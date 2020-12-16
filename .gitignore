@@ -1,0 +1,10 @@
+manuscript/
+.Rproj.user
+data/additional/
+data/prepared/
+data/removed/
+data/coding/masd_studylist_full.xslx
+data/coding/country_continent.csv
+data/coding/Gender\ Development\ Index\ (GDI).csv
+data/coding/Gender\ Inequality\ Index\ (GII).csv
+data/coding/UNO-Sex-ratio-age-specific.xlsx
