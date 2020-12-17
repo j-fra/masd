@@ -1,4 +1,5 @@
 manuscript/*
+git-push.sh
 .Rproj.user
 .Rhistory
 README.html
