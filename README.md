@@ -1,15 +1,15 @@
 This readme file summarizes the data and code in the *masd*-project directory. 
 
-# masd_reloaded.Rproj (FILE)
+# `masd_reloaded.Rproj` (FILE)
 Double-click this file to open the R-project. This will set your working directory to the project folder so that all relative paths should work.  
 
-# renv.lock (FILE)
+# `renv.lock` (FILE)
 We used the `renv`-package for dependency management. The json-formatted `renv.lock` file lists all packages we used including their versions. When in the root-directory of the project, the packages can be installed using `renv::restore()`. 
 
-# results (FOLDER)
+# `results/` (FOLDER)
 This folder stores intermediate and final results objects, such as dataframes stored as .Rda objects, Word tables, or exported figures. The names of results files usually correspond to the names of the R scripts that created them. 
 
-# code (FOLDER)
+# `code/` (FOLDER)
 This folder contains all data processing and analysis code. The numbering from 01 to 04 indicates potential dependency: Scripts starting with 04 depend on output from scripts starting with 03, and so forth. Intermediate datasets are stored as .Rda files in the `results/` directory. Tables are stored as Word-documents in `results/figures and tables/`. Figures are stored as PNG files in the same folder. 
 
 - `00_run.R`: This R script contains code to run all other R scripts as `jobs` in RStudio (see https://blog.rstudio.com/2019/03/14/rstudio-1-2-jobs/). This way, scripts can be run in parallel in separate R sessions, which speeds up development and avoids dependency issues with incorrectly loaded packages or objects floating around in the environment. Running the scripts that way is not strictly necessary though.
@@ -37,15 +37,15 @@ This folder contains all data processing and analysis code. The numbering from 0
 - `04_retrieve_results.R`: This script retrieves values from various intermediate results objects. It stores these results values in an Excel sheet. These are the values we report in text in the manuscript. The Word document of the manuscript is linked to the Excel results sheet. 
 - `functions`: This folder contains R scripts with helper functions used throughout the project. 
 
-# data (FOLDER)
+# `data/` (FOLDER)
 This folder stores all primary data sources. 
 
 - `coding`: This folder contains various coding data. The file `item_coding.xlsx` contains codings for each questionnaire item. The `study_coding.xlsx` file contains codings one the study- and publication-level. The `mods_info.xlsx` file contains meta-information about the moderators. The `coder_reliability.xlsx` file contains codings by two raters for a set of studies. Some external datasets we used for enriching the dataset are not uploaded in this repository. These are all used in the `02_prepare_df.R` script. This script contains information about where to find the external datasets. 
 - `templates`: This folder contains Excel sheet templates. These were used to put the primary data that we collected from original authors into predefined formats. We then processed these Excel sheets automatically according to the format. 
 - `additional`, `prepared`, `removed`: These folder are **not** included in the repository, as they contain primary data. We do not have permission to share them. 
 
-# manuscript (FOLDER)
+# `manuscript/` (FOLDER)
 This folder contains the supplementary online materials in a Word document. 
 
-# full effect size data.csv (FILE)
-This is the full dataset containg all effect sizes after outlier removal. We added this file as a convenience for readers. The R scripts do not use this file, but use the intermediate results objects stored in `results/`
+# `full effect size data.csv` (FILE)
+This is the full dataset containg all effect sizes after outlier removal. We added this file as a convenience for readers. The R scripts do not use this file, but use the intermediate results objects stored in `results/`.

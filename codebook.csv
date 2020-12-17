@@ -1,0 +1,174 @@
+"","variable","description","group","type"
+"1","id.full","Full ID code of effect size: Lastnamefirstauthor_Lastnamesecondauthor_P_Lastnamethirdauthor_Publicationyear_id.study","id","character"
+"2","id.full.out","Full ID code plus outcome plus id.out","id","character"
+"3","id.out","ID of outcome within the study (numeric)","id","numeric"
+"4","id.pub","ID code of publication: Lastnamefirstauthor_Lastnamesecondauthor_P_Lastnamethirdauthor_ublicationyear","id","character"
+"5","id.study","ID of study or experiment (numeric)","id","numeric"
+"6","aggregation.span","How long is the time span relevant to the measure? (in days)","item characteristics","numeric"
+"7","cluster","Type of outcome (Sex Partners in Last Year, Total One Night Stand Partners, Cognition Frequency, Affect Frequency, Behavior Frequency, Self-Rated Sex Drive, Intercourse Frequency, Affect Intensity, Total Sex Partners)","item characteristics","character"
+"8","cluster.abbr","Abbreviated version of cluster","item characteristics","character"
+"9","cntrl_extrapair","Dichotomized recoding of item content for sexual cognition effect sizes only.","item characteristics","numeric"
+"10","comment","Anything noteworthy?","item characteristics","logical"
+"11","content","For cognition and desire: What is the content of the thoughts and desires, i.e. what do people desire or think about?","item characteristics","character"
+"12","context","What was the context in which the behavior/emotion/cognition occurred?","item characteristics","character"
+"13","definition","Was some sort of definition of the relevant concept provided?","item characteristics","character"
+"14","desire.ambiguous","For desire frequency items: Could the item also be interpreted as an 'ideal frequency of sex'?","item characteristics","character"
+"15","domain","Which sex drive domain does the item indicate?","item characteristics","character"
+"16","inventory","From which psychometric inventory was the item retrieved?","item characteristics","character"
+"17","inventory.abbr","Abbreviated version of inventory","item characteristics","character"
+"18","item","Full questionnaire item","item characteristics","character"
+"19","recall.interval","How long is the time interval over which behavior/experience is aggregated? (in days)","item characteristics","character"
+"20","reference.group","Are respondents ask to evaluate themselves in comparison to a specific reference group (e.g. 'people of your age and sex'?","item characteristics","character"
+"21","reversed","Is the item reversed, i.e. high agreement/frequency indicates low sex drive?","item characteristics","character"
+"22","scale","Full wording of the response scale of the questionnaire item","item characteristics","character"
+"23","scale.is.absolute.frequency","Did the response scale capture absolute frequencies of sexual events","item characteristics","character"
+"24","scale.is.open","Did the response scale have an open response format?","item characteristics","character"
+"25","scale.max","For closed response scale (e.g. Likert-type scales): What was the scale maximum?","item characteristics","numeric"
+"26","scale.min","For closed response scale (e.g. Likert-type scales): What was the scale minimum?","item characteristics","numeric"
+"27","scale.range","scale.max - scale.min","item characteristics","numeric"
+"28","trans.available","Can the response scale in principle be transformed to absolute frequencies?","item characteristics","character"
+"29","valence.wording","For desire intensity items: How is the valence labelled?","item characteristics","character"
+"30","wording","How is the construct labelled?","item characteristics","character"
+"31","wording.other","If other, specify","item characteristics","character"
+"32","data.source","Where did the primary data come from?","metadata","character"
+"33","data.structure","Was the data provided in the form of summary statistics or as raw data?","metadata","character"
+"34","file_name","Name of the file that contained the raw data","metadata","character"
+"35","age.diff","Age difference between men and women (values > 0 indicate higher values in men)","publication characteristics
+
+","numeric"
+"36","aim.gender.sexdrive","Is it clear from the abstract that the paper aimed to test gender differences in sex-drive related variables?","publication characteristics
+
+","character"
+"37","focus.gender.sexdrive","Is there any mention of gender differences in sex drive related variable in the abstract? (yes/no)","publication characteristics
+
+","character"
+"38","focus.on.gender","Is there any mention of gender differences in the abstract? (yes/no)","publication characteristics
+
+","character"
+"39","ga.first.cat","Gender of the first author as character string.","publication characteristics
+
+","character"
+"40","ga.last","Gender of the last author (0 = female, 1 = male)","publication characteristics
+
+","numeric"
+"41","ga.mean","Average gender of all authors (0 = all female, 1 = all male)","publication characteristics
+
+","numeric"
+"42","ga1","Gender of the 1st author (0 = female; 1 = male)","publication characteristics
+
+","numeric"
+"43","ga2","Gender of the 2nd author (0 = female; 1 = male)","publication characteristics
+
+","numeric"
+"44","ga3","Gender of the 3rd author (0 = female; 1 = male)","publication characteristics
+
+","numeric"
+"45","ga4","Gender of the 4th author (0 = female; 1 = male)","publication characteristics
+
+","numeric"
+"46","ga5","Gender of the 5th author (0 = female; 1 = male)","publication characteristics
+
+","numeric"
+"47","ga6","Gender of the 6th author (0 = female; 1 = male)","publication characteristics
+
+","numeric"
+"48","ga7","Gender of the 7th author (0 = female; 1 = male)","publication characteristics
+
+","numeric"
+"49","ga8","Gender of the 8th author (0 = female; 1 = male)","publication characteristics
+
+","numeric"
+"50","journal.open","What journal is the study published in? (open) (decide based on pdf)","publication characteristics
+
+","character"
+"51","pubyear","Year the study was published (numeric)","publication characteristics
+
+","numeric"
+"52","receivedyear","Year the study was received (only when 'studyyear' is not available) (numeric)","publication characteristics
+
+","numeric"
+"53","sex.journal","Was the study published in a journal dedicated to the study of sexuality?","publication characteristics
+
+","character"
+"54","studyyear","Year the study was conducted (numeric)","publication characteristics
+
+","numeric"
+"55","age.mean","Mean age of the total sample (numeric) [Enter only when gender specific values are missing]","sample characteristics","numeric"
+"56","age.mean.female","Mean age of the females in the sample","sample characteristics","numeric"
+"57","age.mean.male","Mean age of the males in the sample","sample characteristics","numeric"
+"58","age.sd","Standard deviation of the age of the total sample (numeric)","sample characteristics","numeric"
+"59","age.sd.female","Standard deviation of the age of the females in the sample","sample characteristics","numeric"
+"60","age.sd.male","Standard deviation of the age of the males in the sample","sample characteristics","numeric"
+"61","contraception","percentage of females that take hormonal contraception (numeric)","sample characteristics","numeric"
+"62","ethn.middle.eastern","What percentage of the sample is ethnic self-reported Middle Eastern? (numeric)","sample characteristics","numeric"
+"63","ethn.perc.asian","What percentage of the sample is ethnic self-reported Asian or East Indian? (numeric)","sample characteristics","numeric"
+"64","ethn.perc.black","What percentage of the sample is ethnic self-reported Black or African American? (numeric)","sample characteristics","numeric"
+"65","ethn.perc.hispanic","What percentage of the sample is ethnic self-reported Hispanic or Latino or Mexican American? (numeric)","sample characteristics","numeric"
+"66","ethn.perc.island","What percentage of the sample is ethnic self-reported Native Hawaiian or Other Pacific Islander? (numeric)","sample characteristics","numeric"
+"67","ethn.perc.multi","What percentage of the sample is ethnic self-reported Multiracial? (numeric)","sample characteristics","numeric"
+"68","ethn.perc.native","What percentage of the sample is ethnic self-reported American Indian or Alaska Native? (numeric)","sample characteristics","numeric"
+"69","ethn.perc.other","What percentage of the sample is ethnic self-reported Other or Unknown? (numeric)","sample characteristics","numeric"
+"70","ethn.perc.white","What percentage of the sample is ethnic self-reported White or Caucasian? (numeric)","sample characteristics","numeric"
+"71","hetero.diff","Difference in percent heterosexual between men and women in the sample (values > 0 indicate higher values in men)","sample characteristics","numeric"
+"72","hetero.female.perc","What percantage of the females in the sample is self-reported heterosexual? (numeric)","sample characteristics","numeric"
+"73","hetero.male.perc","What percantage of the males in the sample is self-reported heterosexual? (numeric)","sample characteristics","numeric"
+"74","hetero.perc","What percantage of the total sample is self-reported heterosexual? (numeric)","sample characteristics","numeric"
+"75","nation","In which nation was the study conducted? (open) [if information is not provided specifically, we assume that the survey took place in the country were the authors are based.]","sample characteristics","character"
+"76","nation.raw","Raw coding of the nation","sample characteristics","character"
+"77","partnership.duration","Mean duration of partnership for partnered participants in months","sample characteristics","numeric"
+"78","perc.children","What percentage of the participants had children? (numeric)","sample characteristics","numeric"
+"79","perc.religious","What percentage of the sample is self-reported religious? (numeric)","sample characteristics","numeric"
+"80","population.defined","Is the sample intended to be representative of a certain population? (yes/no)","sample characteristics","character"
+"81","population.open","What is the population?","sample characteristics","character"
+"82","probability.sampling","Was probability or non-probability sampling used (i.e. did all members of the population have the same non-zero chance of being included in the sample)?  (yes/no)","sample characteristics","character"
+"83","recruitment.method.open","Sampling method (open)","sample characteristics","character"
+"84","response.rate","What percentage of the contacted participants completed the questionaire? (numeric)","sample characteristics","numeric"
+"85","sampling.method","Which sampling method was used exactly? (Simple Random, Stratified, Cluster, Systematic, Multistage, Volunteer, Convenience, Quota, purposiv)","sample characteristics","character"
+"86","ses.open","Any information that is available regarding the socio-economic status of the sample (open)","sample characteristics","character"
+"87","sex.ratio","What was the ratio of men to women in the population in the country where the study was conducted at the time the study was conducted?","sample characteristics","numeric"
+"88","sexuality.study","Was the study advertised or introduced as a study on sexuality?","sample characteristics","character"
+"89","sexually.active","Was the study limited to sexually active participants?","sample characteristics","character"
+"90","singles.diff","Difference in percent single between men and women in the sample (values > 0 indicate higher values in men)","sample characteristics","numeric"
+"91","singles.female.perc","What percantage of the females in the sample was not in a relationship?","sample characteristics","numeric"
+"92","singles.male.perc","What percantage of the males in the sample was not in a relationship?","sample characteristics","numeric"
+"93","singles.perc","What percentage of the total sample is single?","sample characteristics","numeric"
+"94","university.student.perc","What percentage of the sample are students enrolled in higher education?","sample characteristics","numeric"
+"95","cor_data","Within-study correlation table of outcomes (nested list column)","statistical values","list"
+"96","g","Small-sample corrected effect size (Hedges g) indicating the standardized mean difference in sex drive between men and women. Higher values indicate stronger sex drive in men.","statistical values","numeric"
+"97","kurtosis.f","Kurtosis of the distribution of women's responses","statistical values","numeric"
+"98","kurtosis.m","Kurtosis of the distribution of men's responses","statistical values","numeric"
+"99","max","Maximum of the raw responses","statistical values","character"
+"100","mean.f","Mean of the raw responses of women","statistical values","numeric"
+"101","mean.m","Mean of the raw responses of women","statistical values","numeric"
+"102","min","Minimum of the raw responses","statistical values","character"
+"103","n.f","Number of women in the sample","statistical values","numeric"
+"104","n.m","Number of men in the sample","statistical values","numeric"
+"105","n.total","Total sample size","statistical values","numeric"
+"106","sd.f","Standard deviation of the raw responses of women","statistical values","numeric"
+"107","sd.m","Standard deviation of the raw responses of men","statistical values","numeric"
+"108","se.g","Standard error of g","statistical values","numeric"
+"109","skew.f","Skewness of the raw responses of women","statistical values","numeric"
+"110","skew.m","Skewness of the raw responses of men","statistical values","numeric"
+"111","var.g","Variance of Hedges g","statistical values","numeric"
+"112","anonymity.open","What information did the participants receive regarding anonymity and confidentiality?","study characteristics","character"
+"113","anonymity.paper","Was there definitely any mention of anonmyity, confidentiality or privacy anywhere in the paper? (yes/no) Example: To assure privacy, we …","study characteristics","character"
+"114","anonymity.participant","Was there definitely any mention of anonmyity, confidentiality or privacy towards the participants? (yes/no)","study characteristics","character"
+"115","asked.verbally","Were the questions asked verbally by an interviewer? (yes/no)","study characteristics","character"
+"116","compensation","What type of compensation did participants receive in return for participation (none/material/coursecredit/mixed)","study characteristics","character"
+"117","continent","In which continent was the study conducted?","study characteristics","character"
+"118","couples","Were specifically couples investigated? (yes/no)","study characteristics","character"
+"119","electronic","Was the data-collection electronic? (yes/no)","study characteristics","character"
+"120","gdi","Gender development index of the country where the study was conducted at the time when the study was conducted (approximately)","study characteristics","numeric"
+"121","gii","Gender inequality index of the country where the study was conducted at the time when the study was conducted (approximately)","study characteristics","numeric"
+"122","group.testing","Were participants tested in groups?","study characteristics","character"
+"123","identification","What identifying characteristics of themselves did the respondents have to reveal in the survey process (voice/face/home/multiple possible)?","study characteristics","character"
+"124","manipulation","Was there an experimental manipulation before the measurement? (yes/no)","study characteristics","character"
+"125","others.present","Were other people definitely physically present when participants responded, e.g. in a group session? (yes/no) [if participants were given the option to choose were they completed the questionaire, we assumed that they did so in private]","study characteristics","character"
+"126","panel.study","If data was drawn from a large, multipurpose panel study, note the acronym and year of the study. Else NA. Example: NSHAH_2004_2005","study characteristics","character"
+"127","personal.contact","Did the respondents personally meet anyone affiliated with the research team? (yes/no)","study characteristics","character"
+"128","publication.status","Was the study published?","study characteristics","character"
+"129","respond.to.face","Did the respondents answer to the face of the surveyor? (yes/no)","study characteristics","character"
+"130","survey.type.open","How was the data collected? (lab, online, letter, interview, self-completion questionnaire, diary, public places, lecture, classroom)","study characteristics","character"
+"131","third.sex.offered","Did any participants select other categories besides ""male"" and ""female"" when reporting their gender, e.g. ""other"", ""inter"", ""rather not say""? (yes/no)","study characteristics","character"
+"132","web.based","Was the data-collection web-based? (yes/no)","study characteristics","character"
+"133","year","Final year variable, constructed from pubyear, receivedyear, and studyyear","study characteristics","numeric"

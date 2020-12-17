@@ -155,8 +155,6 @@ rs2 <- rs %>%
     mutate(se.g = sqrt(var.g),
            n.total = n.m + n.f,
            cluster.abbr = cluster,
-           cluster.sd = cluster %>% na_if("Partners Lifetime") %>% na_if("Partners 12 Months") %>% na_if("ONS Lifetime") %>% na_if("Intercourse Frequency"),
-           cluster.other = ifelse(is.na(cluster.sd), cluster, NA),
            cluster = domain %>% 
                recode("Behavior Frequency" = "Behavior Frequency", 
                       "Sex Drive" = "Self-Rated Sex Drive", 
@@ -227,6 +225,8 @@ d2 <- split(rs2, rs2$cluster.abbr) %>% set_names(paste0("rs.", tolower(names(.))
 sapply(d2, nrow) %>% View
     
 save(d2, file = "results/es_prepared2.Rda")
+
+write.csv(d2$rs %>% select(-cor_data), "full effect size data.csv")
 
 # Checks
 # all nation variables in giidata?
