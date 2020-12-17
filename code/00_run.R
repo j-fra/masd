@@ -9,8 +9,6 @@
     walk(list.files("code/functions/", full.names = T), source)
 }
 
-# blaaa
-
 # This R script contains code to run all other R scripts as "jobs" in RStudio (see https://blog.rstudio.com/2019/03/14/rstudio-1-2-jobs/). 
 # This way, scripts can be run in parallel in separate R sessions, which speeds up development and avoids dependency issues with 
 # incorrectly loaded packages or objects floating around in the environment. Running the scripts that way is not strictly necessary though.
