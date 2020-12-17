@@ -468,5 +468,6 @@ if(mean(dat$num == 1:nrow(dat)) != 1)stop("ERROR: SOMETHING IS WRONG WITH THE RO
 
 # rbind(data.frame(num = , id = "", val = )) %>% 
 
-write.xlsx(dat, "C:/Users/Admin/Dropbox/masd_reloaded/manuscript/results.xlsx")
-# writexl::write_xlsx(dat, "C:/Users/Admin/Dropbox/masd_reloaded/manuscript/results.xlsx")
+write.xlsx(dat, "manuscript/results.xlsx")
+write.xlsx(dat, "results/results.xlsx")
+# writexl::write_xlsx(dat, "manuscript/results.xlsx")
