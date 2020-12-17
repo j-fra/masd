@@ -49,3 +49,6 @@ This folder contains the supplementary online materials in a Word document.
 
 # `full effect size data.csv` (FILE)
 This is the full dataset containg all effect sizes after outlier removal. We added this file as a convenience for readers. The R scripts do not use this file, but use the intermediate results objects stored in `results/`.
+
+# `codebook.csv` (FILE)
+This codebook contains descriptions of all variables included in the effect size data set. 
