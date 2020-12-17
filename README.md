@@ -43,3 +43,9 @@ This folder stores all primary data sources.
 - `coding`: This folder contains various coding data. The file `item_coding.xlsx` contains codings for each questionnaire item. The `study_coding.xlsx` file contains codings one the study- and publication-level. The `mods_info.xlsx` file contains meta-information about the moderators. The `coder_reliability.xlsx` file contains codings by two raters for a set of studies. Some external datasets we used for enriching the dataset are not uploaded in this repository. These are all used in the `02_prepare_df.R` script. This script contains information about where to find the external datasets. 
 - `templates`: This folder contains Excel sheet templates. These were used to put the primary data that we collected from original authors into predefined formats. We then processed these Excel sheets automatically according to the format. 
 - `additional`, `prepared`, `removed`: These folder are **not** included in the repository, as they contain primary data. We do not have permission to share them. 
+
+# manuscript (FOLDER)
+This folder contains the supplementary online materials in a Word document. 
+
+# full effect size data.csv (FILE)
+This is the full dataset containg all effect sizes after outlier removal. We added this file as a convenience for readers. The R scripts do not use this file, but use the intermediate results objects stored in `results/`
