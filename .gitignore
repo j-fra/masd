@@ -1,4 +1,4 @@
-manuscript/
+manuscript/*
 .Rproj.user
 .Rhistory
 README.html
