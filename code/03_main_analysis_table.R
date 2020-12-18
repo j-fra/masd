@@ -257,6 +257,19 @@ main_analysis_table <- regulartable(main_analysis_data) %>%
     compose(value = as_paragraph("I", as_sup("2")), i = 1:2, j = "i.sq", part = "header") %>%
     compose(value = as_paragraph("t"), i = 1:2, j = "tau", part = "header") %>%
     font(j = "tau", part = "header", fontname = "Symbol") %>% 
+    add_header_lines("Main Results") %>% 
+    add_header_lines("Table 2") %>% 
+    italic(i = 2, part = "header") %>% 
+    bold(i = 1, part = "header") %>% 
+    line_spacing(i = 1:2, space = 2, part = "header") %>% 
     fontsize(size = 8, part = "all") 
+
+read_docx() %>% 
+    body_add_flextable(value = main_analysis_table,
+                       split = TRUE) %>% 
+    body_end_section_landscape() %>%
+    print(target = "results/figures and tables/main_analysis_table.docx")
+
+shell.exec(paste0(getwd(), "/results/figures and tables/main_analysis_table.docx"))
 
 save(main_analysis_table, file = "results/figures and tables/main_analysis_table.Rda")

@@ -33,6 +33,11 @@ inventory_overview <- regulartable(inventory_overview_data) %>%
     compose(value = as_paragraph(as_i("Note. "), 
                                  'See the supplementary online materials for a complete list of the inventories with references.'), 
             part = "footer") %>% 
+    add_header_lines("Overview of Psychometric Inventories") %>% 
+    add_header_lines("Table S2") %>% 
+    italic(i = 2, part = "header") %>% 
+    bold(i = 1, part = "header") %>% 
+    line_spacing(i = 1:2, space = 2, part = "header") %>% 
     fontsize(size = 9, part = "all")
 
 

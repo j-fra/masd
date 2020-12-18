@@ -1,14 +1,3 @@
-{
-    rm(list = ls())
-    
-    library(tidyverse)
-    library(magrittr)
-    
-    load("results/es_prepared2.Rda")
-    
-    walk(list.files("code/functions/", full.names = T), source)
-}
-
 # This R script contains code to run all other R scripts as "jobs" in RStudio (see https://blog.rstudio.com/2019/03/14/rstudio-1-2-jobs/). 
 # This way, scripts can be run in parallel in separate R sessions, which speeds up development and avoids dependency issues with 
 # incorrectly loaded packages or objects floating around in the environment. Running the scripts that way is not strictly necessary though.
@@ -42,3 +31,15 @@ rstudioapi::jobRunScript("code/03_theory_figure.R", workingDir = getwd())
 # Collect results.
 rstudioapi::jobRunScript("code/04_retrieve_results.R", workingDir = getwd())
 rstudioapi::jobRunScript("code/04_moderation_plots.R", workingDir = getwd())
+
+# This is just a convienience to load the data for testing and exploration:
+{
+    rm(list = ls())
+    
+    library(tidyverse)
+    library(magrittr)
+    
+    load("results/es_prepared2.Rda")
+    
+    # walk(list.files("code/functions/", full.names = T), source)
+}

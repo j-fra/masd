@@ -107,8 +107,19 @@ moderator_overview <- regulartable(moderator_overview_data,
         "Note that summaries for continous moderators are computed on the effect size level for this table. In the results section, some of this information was presented on the level of individual participants (i.e., as summaries weighted by sample size). Some values may therefore differ."
         ), part = "footer" ) %>% 
     fontsize(size = 7, part = "all")
-    
+
+title_table_5 <- flextable(data.frame(" " = NA)) %>% 
+    compose(value = as_paragraph(as_i("Moderator Overview")), i = 1, part = "body") %>% 
+    compose(value = as_paragraph(as_b("Table 5")), i = 1, part = "header") %>% 
+    align(align = "left", part = "all") %>% 
+    width(j = 1, width = sum(dim(moderator_overview)$widths)) %>%
+    border_remove() %>% 
+    line_spacing(i = 1, space = 2, part = "header") %>% 
+    fontsize(size = 7, part = "all") 
+
 read_docx() %>% 
+    body_add_flextable(value = title_table_5) %>% 
+    body_add_par("") %>% 
     body_add_flextable(value = moderator_overview,
                        split = TRUE) %>%
     body_end_section_landscape() %>% 

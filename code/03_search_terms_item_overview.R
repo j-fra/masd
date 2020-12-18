@@ -19,14 +19,19 @@ item_overview <- regulartable(item_overview_data %>% rename("Abbr." = "Abbreviat
     width("Abbr.", width = 0.5) %>% 
     width("Role", width = 1.7) %>% 
     width("Example", width = 2.4) %>% 
-    fontsize(size = 8, part = "all") %>% 
     padding(padding = 0) %>% 
     hrule(rule = "exact") %>% 
-    height(height = 0.3) 
+    height(height = 0.3) %>% 
+    add_header_lines("Overview of Included Items") %>% 
+    add_header_lines("Table 1") %>% 
+    italic(i = 2, part = "header") %>% 
+    bold(i = 1, part = "header") %>% 
+    line_spacing(i = 1:2, space = 2, part = "header") %>% 
+    fontsize(size = 8, part = "all")
 
 read_docx() %>% 
     body_add_flextable(value = item_overview,
-                       split = TRUE) %>%
+                       split = TRUE) %>% 
     print(target = "results/figures and tables/item_overview.docx")
 
 shell.exec(paste0(getwd(), "/results/figures and tables/item_overview.docx"))
@@ -46,7 +51,12 @@ search_terms <- regulartable(search_terms_data) %>%
 
     # padding(padding = 0) %>% 
     add_footer_lines("") %>% 
-    compose(value = as_paragraph(as_i("Note. "), 'Search terms for each domain were composed as "One of term 1 AND one of term 2 NOT one of term 3". '), part = "footer") %>% 
+    compose(value = as_paragraph(as_i("Note. "), 'Search terms for each domain were composed as "One of term 1 AND one of term 2 NOT one of term 3". '), part = "footer") %>%  
+    add_header_lines("Search Terms for Literature Search") %>% 
+    add_header_lines("Table S1") %>% 
+    italic(i = 2, part = "header") %>% 
+    bold(i = 1, part = "header") %>% 
+    line_spacing(i = 1:2, space = 2, part = "header") %>% 
     fontsize(size = 9, part = "all")
 
 read_docx() %>% 

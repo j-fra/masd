@@ -156,8 +156,7 @@ moderation_analysis_secondary_regtable <- regulartable(data_for_table,
         as_i("p"), " = ", as_i("p"), "-value associated with the ", as_i("t"), "-value and ", as_i("df"), " in the same row. ",
         "Note that if degrees of freedom fall below 4, significance tests are unreliable. ", as_i("p"), "-values for unreliable tests are not reported (N/A). "
     ), part = "footer" ) %>% 
-    fontsize(size = 6, part = "all") %>% 
-    preview_ft_piped(portrait = T)
+    fontsize(size = 6, part = "all")
 
 moderation_analysis_secondary_tests <- regulartable(data_for_table %>% filter(row_role %in% c("A_Group_Header", "B_mod_results_secondary")), 
                                           col_keys =  
@@ -218,20 +217,35 @@ moderation_analysis_secondary_tests <- regulartable(data_for_table %>% filter(ro
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_cf_test == TRUE, j = "p_cf_mod") %>%
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_di_test == TRUE, j = "p_di_mod") %>%
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_sd_test == TRUE, j = "p_sd_mod") %>%
-    fontsize(size = 6, part = "all") %>% 
-    preview_ft_piped(portrait = T)
+    add_header_lines("Tests for Moderation (Secondary Indicators)") %>% 
+    add_header_lines("Table S3") %>% 
+    italic(i = 2, part = "header") %>% 
+    bold(i = 1, part = "header") %>% 
+    line_spacing(i = 1:2, space = 2, part = "header") %>% 
+    fontsize(size = 6, part = "all") 
+
+title_table_S4 <- flextable(data.frame(" " = NA)) %>% 
+    compose(value = as_paragraph(as_i("Regression Tables for Moderation Analyses (Secondary Indicators)")), i = 1, part = "body") %>% 
+    compose(value = as_paragraph(as_b("Table S4")), i = 1, part = "header") %>% 
+    align(align = "left", part = "all") %>% 
+    width(j = 1, width = sum(dim(moderation_analysis_secondary_regtable)$widths)) %>%
+    border_remove() %>% 
+    line_spacing(i = 1, space = 2, part = "header") %>% 
+    fontsize(size = 6, part = "all") 
 
 read_docx() %>% 
-    body_add_flextable(value = moderation_analysis_regtable_secondary,
+    body_add_flextable(value = title_table_S4) %>% 
+    body_add_par("") %>% 
+    body_add_flextable(value = moderation_analysis_secondary_regtable,
                        split = TRUE) %>% 
-    print(target = "results/figures and tables/moderation_analysis_regtable_secondary.docx")
+    print(target = "results/figures and tables/moderation_analysis_secondary_regtables.docx")
+shell.exec(paste0(getwd(), "/results/figures and tables/moderation_analysis_secondary_regtables.docx"))
 
 read_docx() %>% 
-    body_add_flextable(value = moderation_analysis_tests_secondary,
+    body_add_flextable(value = moderation_analysis_secondary_tests,
                        split = TRUE) %>% 
     print(target = "results/figures and tables/moderation_analysis_tests_secondary.docx")
+shell.exec(paste0(getwd(), "/results/figures and tables/moderation_analysis_tests_secondary.docx"))
 
-shell.exec(paste0(getwd(), "/results/figures and tables/moderation_analysis_regtables_secondary.docx"))
-shell.exec(paste0(getwd(), "/results/figures and tables/moderation_analysis_testss_secondary.docx"))
 
 save(mod_results_secondary, file = "results/mod_results_secondary.Rda")

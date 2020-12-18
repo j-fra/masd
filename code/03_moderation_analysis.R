@@ -190,19 +190,37 @@ moderation_analysis_tests <- regulartable(data_for_table %>% filter(row_role %in
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_cf_test == TRUE, j = "p_cf_mod") %>%
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_df_test == TRUE, j = "p_df_mod") %>%
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_bf_test == TRUE, j = "p_bf_mod") %>%
+    add_header_lines("Tests for Moderation (Primary Indicators)") %>% 
+    add_header_lines("Table 3") %>% 
+    italic(i = 2, part = "header") %>% 
+    bold(i = 1, part = "header") %>% 
+    line_spacing(i = 1:2, space = 2, part = "header") %>% 
     fontsize(size = 6, part = "all")
 
+title_table_4 <- flextable(data.frame(" " = NA)) %>% 
+    compose(value = as_paragraph(as_i("Regression Tables for Moderation Analyses (Primary Indicators)")), i = 1, part = "body") %>% 
+    compose(value = as_paragraph(as_b("Table 4")), i = 1, part = "header") %>% 
+    align(align = "left", part = "all") %>% 
+    width(j = 1, width = 7.4) %>%
+    border_remove() %>% 
+    line_spacing(i = 1, space = 2, part = "header") %>% 
+    fontsize(size = 6, part = "all") 
+
 read_docx() %>% 
+    body_add_flextable(value = title_table_4) %>% 
+    body_add_par("") %>% 
     body_add_flextable(value = moderation_analysis_regtable,
                        split = TRUE) %>% 
     print(target = "results/figures and tables/moderation_analysis_regtable.docx")
+
+shell.exec(paste0(getwd(), "/results/figures and tables/moderation_analysis_regtable.docx"))
+
 
 read_docx() %>% 
     body_add_flextable(value = moderation_analysis_tests,
                        split = TRUE) %>% 
     print(target = "results/figures and tables/moderation_analysis_tests.docx")
 
-shell.exec(paste0(getwd(), "/results/figures and tables/moderation_analysis_regtable.docx"))
 shell.exec(paste0(getwd(), "/results/figures and tables/moderation_analysis_tests.docx"))
 
 save(mod_results, file = "results/mod_results.Rda")

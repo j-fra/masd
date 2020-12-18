@@ -11,10 +11,10 @@
     load("results/es_prepared2.Rda")
 }
 
-robu_second = robu(g ~ cluster-1, d2$rs.second, id.full, var.g, rho = 0.8)
+robu_second <- robu(g ~ cluster-1, d2$rs.second, id.full, var.g, rho = 0.8)
 
-XLIM = c(min(d2$rs_with_outlier$g), max(d2$rs_with_outlier$g))
-YLIM = c(min(d2$rs_with_outlier$se.g), max(d2$rs_with_outlier$se.g))
+XLIM <- c(min(d2$rs_with_outlier$g), max(d2$rs_with_outlier$g))
+YLIM <- c(min(d2$rs_with_outlier$se.g), max(d2$rs_with_outlier$se.g))
 
 g.list <- robu_second %>% 
     extract2("reg_table") %>% 

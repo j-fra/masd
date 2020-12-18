@@ -179,10 +179,10 @@
     },
     "data.table": {
       "Package": "data.table",
-      "Version": "1.12.8",
+      "Version": "1.13.4",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "cd711af60c47207a776213a368626369"
+      "Hash": "626afb25b020646f53105e6485e695c6"
     },
     "dbplyr": {
       "Package": "dbplyr",
@@ -242,10 +242,10 @@
     },
     "flextable": {
       "Package": "flextable",
-      "Version": "0.5.10",
+      "Version": "0.6.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f5b98a146eae55caf2c170e85faa631a"
+      "Hash": "dc14081449242ef1e01ee5e43d255d33"
     },
     "forcats": {
       "Package": "forcats",
@@ -480,10 +480,10 @@
     },
     "officer": {
       "Package": "officer",
-      "Version": "0.3.11",
+      "Version": "0.3.15",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "029bc4575fc5292a57e05839b2b89a36"
+      "Hash": "261577cdfd9fd3d46f9a82d1ab321e21"
     },
     "openssl": {
       "Package": "openssl",
@@ -865,10 +865,10 @@
     },
     "zip": {
       "Package": "zip",
-      "Version": "2.0.4",
+      "Version": "2.1.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "caa73cdca1a87e5f2617915c8809f207"
+      "Hash": "3bc8405c637d988801ec5ea88372d0c2"
     },
     "zoo": {
       "Package": "zoo",

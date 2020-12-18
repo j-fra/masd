@@ -97,7 +97,18 @@ moderator_overview_secondary <- regulartable(moderator_overview_secondary_data,
     ), part = "footer" ) %>% 
     fontsize(size = 7, part = "all")
 
+title_table_S5 <- flextable(data.frame(" " = NA)) %>% 
+    compose(value = as_paragraph(as_i("Moderator Overview")), i = 1, part = "body") %>% 
+    compose(value = as_paragraph(as_b("Table 5")), i = 1, part = "header") %>% 
+    align(align = "left", part = "all") %>% 
+    width(j = 1, width = sum(dim(moderator_overview_secondary)$widths)) %>%
+    border_remove() %>% 
+    line_spacing(i = 1, space = 2, part = "header") %>% 
+    fontsize(size = 7, part = "all") 
+
 read_docx() %>% 
+    body_add_flextable(value = title_table_S5) %>% 
+    body_add_par("") %>% 
     body_add_flextable(value = moderator_overview_secondary,
                        split = TRUE) %>%
     body_end_section_landscape() %>% 
