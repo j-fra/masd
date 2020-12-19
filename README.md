@@ -44,8 +44,11 @@ This folder stores all primary data sources.
 - `templates`: This folder contains Excel sheet templates. These were used to put the primary data that we collected from original authors into predefined formats. We then processed these Excel sheets automatically according to the format. 
 - `additional`, `prepared`, `removed`: These folder are **not** included in the repository, as they contain primary data. We do not have permission to share them. 
 
-# `manuscript/` (FOLDER)
-This folder contains the supplementary online materials in a Word document. 
+# `PRISMA checklist.pdf` (FILE)
+Checklist for PRISMA reporting guidelines, see http://prisma-statement.org/PRISMAStatement/Checklist. 
+
+# `registration protocol (commented).pdf` (FILE)
+We registered this review with PROSPERO. Unfortunately, the registration contains our names and contact information. To enable a blind review process, we reproduced the document here and blackened all section that reveal our identies. We also commented the document to denote all deviations from the protocol. 
 
 # `full effect size data.csv` (FILE)
 This is the full dataset containg all effect sizes after outlier removal. We added this file as a convenience for readers. The R scripts do not use this file, but use the intermediate results objects stored in `results/`.
