@@ -1,4 +1,4 @@
-manuscript/*
+manuscript/
 git-push.sh
 .Rproj.user
 .Rhistory
@@ -12,7 +12,5 @@ data/coding/country_continent.csv
 data/coding/Gender\ Development\ Index\ (GDI).csv
 data/coding/Gender\ Inequality\ Index\ (GII).csv
 data/coding/UNO-Sex-ratio-age-specific.xlsx
-!manuscript/Supplement.docx
-!manuscript/PRISMA checklist.doc
-!manuscript/registration\ protocol\ (commented).pdf
+PRISMA\ checklist.docx
 OSF_link.url
