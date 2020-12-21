@@ -98,8 +98,8 @@ moderator_overview_secondary <- regulartable(moderator_overview_secondary_data,
     fontsize(size = 7, part = "all")
 
 title_table_S5 <- flextable(data.frame(" " = NA)) %>% 
-    compose(value = as_paragraph(as_i("Moderator Overview")), i = 1, part = "body") %>% 
-    compose(value = as_paragraph(as_b("Table 5")), i = 1, part = "header") %>% 
+    compose(value = as_paragraph(as_i("Moderator Overview for Secondary Indicators")), i = 1, part = "body") %>% 
+    compose(value = as_paragraph(as_b("Table S&")), i = 1, part = "header") %>% 
     align(align = "left", part = "all") %>% 
     width(j = 1, width = sum(dim(moderator_overview_secondary)$widths)) %>%
     border_remove() %>% 

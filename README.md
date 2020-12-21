@@ -48,7 +48,7 @@ This folder stores all primary data sources.
 Checklist for PRISMA reporting guidelines, see http://prisma-statement.org/PRISMAStatement/Checklist. 
 
 # `registration protocol (commented).pdf` (FILE)
-We registered this review with PROSPERO. Unfortunately, the registration contains our names and contact information. To enable a blind review process, we reproduced the document here and blackened all section that reveal our identies. We also commented the document to denote all deviations from the protocol. 
+We registered this review with PROSPERO. Unfortunately, the registration contains our names and contact information. To enable a blind review process, we reproduced the document here and blackened all sections that reveal our identies. We also commented the document to denote all deviations from the protocol. 
 
 # `full effect size data.csv` (FILE)
 This is the full dataset containg all effect sizes after outlier removal. We added this file as a convenience for readers. The R scripts do not use this file, but use the intermediate results objects stored in `results/`.
