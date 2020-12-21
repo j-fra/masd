@@ -177,7 +177,7 @@ cluster_es_data <- tibble(
     mutate(Role = ifelse(is.na(Indicator), Role, "")) %>% 
     mutate_all(replace_na, "")
 
-main_analysis_data <- rbind(single_es_data_adj, single_es_data, single_es_data_control, cluster_es_data)
+main_analysis_data <- rbind(single_es_data, single_es_data_adj, single_es_data_control, cluster_es_data)
 
 
 main_results <- main_analysis_data %>% 

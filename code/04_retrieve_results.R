@@ -264,6 +264,13 @@ l <- c(l,
 
 l$perc_raw_data_primary <- str_detect(d2$rs.core$data.source, "raw") %>% table %>% prop.table %>% extract2("TRUE") %>% multiply_by(100) %>% rnd(0)
 
+l$conti <- ((table(d2$rs.core$continent) / sum(table(d2$rs.core$continent))) * 100) %>% {
+  set_names(rnd(., 0), names(.))
+} %>% as.list %>% 
+  lapply(function(x)if(as.numeric(x)<1)"less than 1"else x)
+
+l$conti$complete <- ((sum(!is.na(d2$rs.core$continent)))/ nrow(d2$rs.core)) %>% multiply_by(100) %>% rnd(0)
+
 dat <- data.frame(num = numeric(), id = character(), val = character()) %>%  
   rbind(data.frame(num = 1, id ="total.n", val =l$total.n)) %>% 
   rbind(data.frame(num = 2, id = "total.m", val = l$total.m)) %>% 
@@ -462,7 +469,13 @@ dat <- data.frame(num = numeric(), id = character(), val = character()) %>%
   rbind(data.frame(num = 195, id = "ovl_global_unadj_reversed", val = l$ovl_global_unadj_reversed)) %>% 
   rbind(data.frame(num = 196, id = "cl_global_unadj_reversed", val = l$cl_global_unadj_reversed)) %>% 
   rbind(data.frame(num = 197, id = "perc_raw_data_primary", val = l$perc_raw_data_primary)) %>%  
-  rbind(data.frame(num = 198, id = "irragree", val = mean(readxl::read_xlsx("data/coding/coder_reliability.xlsx")$agreed, na.rm = T) %>% multiply_by(100) %>% rnd(0))) 
+  rbind(data.frame(num = 198, id = "irragree", val = mean(readxl::read_xlsx("data/coding/coder_reliability.xlsx")$agreed, na.rm = T) %>% multiply_by(100) %>% rnd(0))) %>% 
+  rbind(data.frame(num = 199, id = "% africa", val = l$conti$Africa)) %>% 
+  rbind(data.frame(num = 200, id = "% asia", val = l$conti$Asia)) %>% 
+  rbind(data.frame(num = 201, id = "% europe", val = l$conti$Europe)) %>% 
+  rbind(data.frame(num = 202, id = "% north america", val = l$conti$`North America`)) %>% 
+  rbind(data.frame(num = 203, id = "% oceania", val = l$conti$Oceania)) %>% 
+  rbind(data.frame(num = 204, id = "continent_complete", val =l$conti$complete )) 
 
 if(mean(dat$num == 1:nrow(dat)) != 1)stop("ERROR: SOMETHING IS WRONG WITH THE ROW NUMBERS")
 
