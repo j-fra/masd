@@ -143,7 +143,7 @@ moderation_analysis_secondary_regtable <- regulartable(data_for_table,
     add_footer_lines("") %>% 
     compose(value = as_paragraph(
         as_i("Note. "), 
-        "Meta-regression tables for moderation of the secondary sex drive indicators and cognition frequency (not controlled for item content). ",
+        "Meta-regression tables for moderation of the indicators of latent sex drive and cognition frequency (not controlled for item content). ",
         "For categorical moderators, point estimates for subgroups and corresponding significance tests are presented. ",
         "For continuous moderators, values are presented for the intercept and slope. ",
         "Some models could not be fitted because the number of available codings was insufficient. These are left blank. ",
@@ -196,7 +196,7 @@ moderation_analysis_secondary_tests <- regulartable(data_for_table %>% filter(ro
     add_footer_lines("") %>% 
     compose(value = as_paragraph(
         as_i("Note."), 
-        "Tests for moderation of the secondary sex drive indicators and cognition frequency (not controlled for item content). The tests indicate the significance of the slope for continuous moderator or differences between subgroups for categorical moderators. ",
+        "Tests for moderation of the indicators of latent sex drive and cognition frequency (not controlled for item content). The tests indicate the significance of the slope for continuous moderator or differences between subgroups for categorical moderators. ",
         "Some models could not be fitted because the number of available codings was insufficient. These are left blank. ",
         as_i("HTZ"), " = Hotelling-", as_i("T"), "-approximated test statistic. ", 
         as_i("df"), " = small-sample-corrected degrees of freedom. ", 
@@ -217,16 +217,16 @@ moderation_analysis_secondary_tests <- regulartable(data_for_table %>% filter(ro
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_cf_test == TRUE, j = "p_cf_mod") %>%
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_di_test == TRUE, j = "p_di_mod") %>%
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_sd_test == TRUE, j = "p_sd_mod") %>%
-    add_header_lines("Tests for Moderation (Secondary Indicators)") %>% 
-    add_header_lines("Table S3") %>% 
+    add_header_lines("Tests for Moderation (Indicators of Latent Sex Drive)") %>% 
+    add_header_lines("Table S4") %>% 
     italic(i = 2, part = "header") %>% 
     bold(i = 1, part = "header") %>% 
     line_spacing(i = 1:2, space = 2, part = "header") %>% 
     fontsize(size = 6, part = "all") 
 
 title_table_S4 <- flextable(data.frame(" " = NA)) %>% 
-    compose(value = as_paragraph(as_i("Regression Tables for Moderation Analyses (Secondary Indicators)")), i = 1, part = "body") %>% 
-    compose(value = as_paragraph(as_b("Table S4")), i = 1, part = "header") %>% 
+    compose(value = as_paragraph(as_i("Regression Tables for Moderation Analyses (Indicators of Latent Sex Drive)")), i = 1, part = "body") %>% 
+    compose(value = as_paragraph(as_b("Table S5")), i = 1, part = "header") %>% 
     align(align = "left", part = "all") %>% 
     width(j = 1, width = sum(dim(moderation_analysis_secondary_regtable)$widths)) %>%
     border_remove() %>% 

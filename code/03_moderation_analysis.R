@@ -126,7 +126,7 @@ moderation_analysis_regtable <- regulartable(data_for_table,
     add_footer_lines("") %>% 
     compose(value = as_paragraph(
         as_i("Note. "), 
-        "Meta-regression tables for moderation of the primary sex drive indicators. ",
+        "Meta-regression tables for moderation of the sex drive manifestations. ",
         "For categorical moderators, point estimates for subgroups and corresponding significance tests are presented. ",
         "For continuous moderators, values are presented for the intercept and slope. ",
         "For cognition frequency, results are statistically controlled for item content (extra-pair partner vs. any partner/not specified). ",
@@ -173,7 +173,7 @@ moderation_analysis_tests <- regulartable(data_for_table %>% filter(row_role %in
     add_footer_lines("") %>% 
     compose(value = as_paragraph(
         as_i("Note."), 
-        "Tests for moderation of the primary sex drive indicators. The tests indicate significance of the slope for continuous moderators or differences between subgroups for categorical moderators. ",
+        "Tests for moderation of the sex drive manifestations. The tests indicate significance of the slope for continuous moderators or differences between subgroups for categorical moderators. ",
         "For cognition frequency, the results are statistically controlled for item content (extra-pair partner vs. any partner/not specified). ",
         "Results for the control variable are not reported. ",
         "Some models could not be fitted because the number of available codings was insufficient. These are left blank. ",
@@ -190,7 +190,7 @@ moderation_analysis_tests <- regulartable(data_for_table %>% filter(row_role %in
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_cf_test == TRUE, j = "p_cf_mod") %>%
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_df_test == TRUE, j = "p_df_mod") %>%
     compose(value = as_paragraph("N/A"), i = ~ df_less_than_4_bf_test == TRUE, j = "p_bf_mod") %>%
-    add_header_lines("Tests for Moderation (Primary Indicators)") %>% 
+    add_header_lines("Tests for Moderation (Sex Drive Manifestations)") %>% 
     add_header_lines("Table 3") %>% 
     italic(i = 2, part = "header") %>% 
     bold(i = 1, part = "header") %>% 
@@ -198,7 +198,7 @@ moderation_analysis_tests <- regulartable(data_for_table %>% filter(row_role %in
     fontsize(size = 6, part = "all")
 
 title_table_4 <- flextable(data.frame(" " = NA)) %>% 
-    compose(value = as_paragraph(as_i("Regression Tables for Moderation Analyses (Primary Indicators)")), i = 1, part = "body") %>% 
+    compose(value = as_paragraph(as_i("Regression Tables for Moderation Analyses (Sex Drive Manifestations)")), i = 1, part = "body") %>% 
     compose(value = as_paragraph(as_b("Table 4")), i = 1, part = "header") %>% 
     align(align = "left", part = "all") %>% 
     width(j = 1, width = 7.4) %>%

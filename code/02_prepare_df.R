@@ -12,6 +12,12 @@
     load("results/es2_raw.Rda")
 }
 
+# Drop items removed during R1 -----------------------------------------------------------------------------------
+
+es2_remove <- es2 %>% 
+    filter(grepl("Compared to other people of your age and sex", item) | 
+               grepl("How would you compare your level of sex drive with that of the average person of your gender and age?", item))
+
 
 # Add study coding data ------------------------------------------------------------------------------------------
 
@@ -23,6 +29,7 @@ find_unconvertible <- function(vec){
 }
 
 cdat <- readxl::read_xlsx("data/coding/study_coding.xlsx", col_names = F, na = "NA", .name_repair = "minimal")
+# cdat <- readxl::read_xlsx("data/coding/study_coding_w-RapeRate.xlsx", col_names = F, na = "NA", .name_repair = "minimal")
 
 modinfo <- cdat %>% 
     data.frame(stringsAsFactors = F) %>% 
@@ -58,12 +65,26 @@ idat <- idat %>%
 
 rs <- rs %>% inner_join(idat, by = "item")
 
+# R1: recode item content "a partner" to "unspecified partner"
+
+rs <- rs %>% 
+    mutate(content = recode(content, "a partner" = "unspecified partner"))
+
+unique(rs$content)
+
 rm(idat)
 
 
 
 # Add and clean variables ----------------------------------------------------------------------------------------
 mods_info <- readxl::read_xlsx("data/coding/mods_info.xlsx", col_names = T)
+
+# Sexual violence
+svdata <- readxl::read_xlsx("data/coding/Sexual Violence.xlsx") %>% 
+    mutate(Country = trimws(Country), XNA = NA) %>% 
+    {set_names(., paste0("X", names(.)))} %>% 
+    rename("Country" = "XCountry", "XNA" = "XXNA") %>% 
+    mutate_at(vars(-Country), as.numeric)
 
 # The gii and gdi datasets were downloaded from http://hdr.undp.org/ and 
 # are not included in this repository. 
@@ -200,8 +221,13 @@ rs2 <- rs %>%
                                  nation == "United States, 61.5%, Canada, 30.3%, NA, 8.3%" ~ "North America",
                                  TRUE ~ continent)) %>% 
     mutate(cntrl_extrapair = (content == "extra-pair partner") %>% as.numeric) %>% 
+    mutate(sex.vio = map2(nation, year, get_gii_gdi_sr, dat = svdata) %>% flatten_dbl) %>% 
     select(mods_info %>% filter(!is.na(order)) %>% arrange(order) %>% select(modvarname) %>% flatten_chr,
-           mods_info %>% arrange(class) %>% select(modvarname) %>% flatten_chr)
+           mods_info %>% arrange(class) %>% select(modvarname) %>% flatten_chr) 
+    
+
+    
+    
 
 # Also add new mods to mods_info.xlsx!!!
 

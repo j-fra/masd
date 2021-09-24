@@ -63,21 +63,26 @@ l <- list(
   min.year.core = min(d2$rs.core$year, na.rm = T) %>% rnd(0),
   max.year.core = max(d2$rs.core$year, na.rm = T) %>% rnd(0),
   sex.journal.perc = mean(d2$rs.core$sex.journal == "yes", na.rm = T),
-  core.global.g.adj = ((mnn$g[mnn$Indicator == "Primary Indicators"] %>% as.numeric) - 
-                         (mnn$g[mnn$Indicator == "Bias Indicators"] %>% as.numeric)) %>% rnd(2),
-  core.global.g = mnn$g[mnn$Indicator == "Primary Indicators"],
-  core.global.CI95 = mnn$CI95[mnn$Indicator == "Primary Indicators"],
-  control.global.g = mnn$g[mnn$Indicator == "Bias Indicators"],
+  core.global.g.adj = ((mnn$g[mnn$Indicator == "Sex Drive Manifestations"] %>%  strtrim(4) %>% as.numeric) - 
+                         (mnn$g[mnn$Indicator == "Bias Indicators"] %>%  strtrim(4) %>% as.numeric))  %>% rnd(2),  # this is so bad
+  core.global.g = mnn$g[mnn$Indicator == "Sex Drive Manifestations"] %>%  strtrim(4),
+  core.global.CI95 = mnn$CI95[mnn$Indicator == "Sex Drive Manifestations"],
+  control.global.g = mnn$g[mnn$Indicator == "Bias Indicators"] %>%  strtrim(4),
   control.global.CI95 = mnn$CI95[mnn$Indicator == "Bias Indicators"],
-  core.bf.g = mnn$g[mnn$Indicator == "Behavior Frequency"],
-  core.df.g = mnn$g[mnn$Indicator == "Affect Frequency"],
-  core.cf.g = mnn$g[mnn$Indicator == "Cognition Frequency"],
-  core.isq = mnn$i.sq[mnn$Role == "Primary Sex Drive Indicators" & mnn$Indicator == ""],
-  core.tau = mnn$tau[mnn$Role == "Primary Sex Drive Indicators" & mnn$Indicator == ""],
-  second.di.g = mnn$g[mnn$Indicator == "Affect Intensity"],
-  second.sd.g = mnn$g[mnn$Indicator == "Self Rated Sex Drive"],
-  second.isq = mnn$i.sq[mnn$Role == "Secondary Sex Drive Indicators" & mnn$Indicator == ""],
-  second.tau = mnn$tau[mnn$Role == "Secondary Sex Drive Indicators" & mnn$Indicator == ""],
+  core.bf.g = mnn$g[mnn$Indicator == "Behavior Frequency"] %>%  strtrim(4),
+  core.df.g = mnn$g[mnn$Indicator == "Affect Frequency"] %>%  strtrim(4),
+  core.cf.g = mnn$g[mnn$Indicator == "Cognition Frequency"] %>%  strtrim(4),
+  core.bf.g.adj = mnn$g[mnn$Indicator == "Behavior Frequency"] %>% substr(7, 10),
+  core.df.g.adj = mnn$g[mnn$Indicator == "Affect Frequency"] %>% substr(7, 10),
+  core.cf.g.adj = mnn$g[mnn$Indicator == "Cognition Frequency"] %>% substr(7, 10),
+  core.isq = mnn$i.sq[mnn$Role == "Sex Drive Manifestations" & mnn$Indicator == ""],
+  core.tau = mnn$tau[mnn$Role == "Sex Drive Manifestations" & mnn$Indicator == ""],
+  second.di.g = mnn$g[mnn$Indicator == "Affect Intensity"] %>%  strtrim(4),
+  second.sd.g = mnn$g[mnn$Indicator == "Self Rated Sex Drive"] %>%  strtrim(4),
+  second.di.g.adj = mnn$g[mnn$Indicator == "Affect Intensity"] %>% substr(7, 10),
+  second.sd.g.adj = mnn$g[mnn$Indicator == "Self Rated Sex Drive"] %>% substr(7, 10),
+  second.isq = mnn$i.sq[mnn$Role == "Indicators of Latent Sex Drive" & mnn$Indicator == ""],
+  second.tau = mnn$tau[mnn$Role == "Indicators of Latent Sex Drive" & mnn$Indicator == ""],
   core.bf.CI95 = mnn$CI95[mnn$Indicator == "Behavior Frequency"],
   core.df.CI95 = mnn$CI95[mnn$Indicator == "Affect Frequency"],
   core.cf.CI95 = mnn$CI95[mnn$Indicator == "Cognition Frequency"],
@@ -93,12 +98,12 @@ l <- list(
   control.tp.CI95 = mnn$CI95[mnn$Indicator == "Total Sex Partners"],
   control.isq = mnn$i.sq[mnn$Role == "Bias Indicators" & mnn$Indicator == ""],
   control.tau = mnn$tau[mnn$Role == "Bias Indicators" & mnn$Indicator == ""],
-  core.F = mnn$F[mnn$Role == "Primary Sex Drive Indicators" & mnn$Indicator == ""],
-  core.df.F = mnn$df.F[mnn$Role == "Primary Sex Drive Indicators" & mnn$Indicator == ""],
-  core.p.F = mnn$p.F[mnn$Role == "Primary Sex Drive Indicators" & mnn$Indicator == ""],
-  second.F = mnn$F[mnn$Role == "Secondary Sex Drive Indicators" & mnn$Indicator == ""],
-  second.df.F = mnn$df.F[mnn$Role == "Secondary Sex Drive Indicators" & mnn$Indicator == ""],
-  second.p.F = mnn$p.F[mnn$Role == "Secondary Sex Drive Indicators" & mnn$Indicator == ""],
+  core.F = mnn$F[mnn$Role == "Sex Drive Manifestations" & mnn$Indicator == ""],
+  core.df.F = mnn$df.F[mnn$Role == "Sex Drive Manifestations" & mnn$Indicator == ""],
+  core.p.F = mnn$p.F[mnn$Role == "Sex Drive Manifestations" & mnn$Indicator == ""],
+  second.F = mnn$F[mnn$Role == "Indicators of Latent Sex Drive" & mnn$Indicator == ""],
+  second.df.F = mnn$df.F[mnn$Role == "Indicators of Latent Sex Drive" & mnn$Indicator == ""],
+  second.p.F = mnn$p.F[mnn$Role == "Indicators of Latent Sex Drive" & mnn$Indicator == ""],
   control.F = mnn$F[mnn$Role == "Bias Indicators" & mnn$Indicator == ""],
   control.df.F = mnn$df.F[mnn$Role == "Bias Indicators" & mnn$Indicator == ""],
   control.p.F = mnn$p.F[mnn$Role == "Bias Indicators" & mnn$Indicator == ""],
@@ -207,12 +212,12 @@ l <- c(l, mr = list(mr), mr2 = list(mr2))
 
 
 l <- c(l, 
-       u3_global_adj = mnn$U3[mnn$Indicator == "Primary Indicators (Adjusted)"],
-       ovl_global_adj = mnn$OVL[mnn$Indicator == "Primary Indicators (Adjusted)"],
-       cl_global_adj = mnn$CL[mnn$Indicator == "Primary Indicators (Adjusted)"],
-       u3_global_adj_reversed = ((1-as.numeric(mnn$U3[mnn$Indicator == "Primary Indicators (Adjusted)"]))*100) %>% rnd(0),
-       ovl_global_adj_reversed = ((1-as.numeric(mnn$OVL[mnn$Indicator == "Primary Indicators (Adjusted)"]))*100) %>% rnd(0),
-       cl_global_adj_reversed = ((1-as.numeric(mnn$CL[mnn$Indicator == "Primary Indicators (Adjusted)"]))*100) %>% rnd(0),
+       u3_global_adj = mnn$U3[mnn$Indicator == "Sex Drive Manifestations"] %>% substr(7, 10),
+       ovl_global_adj = mnn$OVL[mnn$Indicator == "Sex Drive Manifestations"] %>% substr(7, 10),
+       cl_global_adj = mnn$CL[mnn$Indicator == "Sex Drive Manifestations"] %>% substr(7, 10),
+       u3_global_adj_reversed = ((1-as.numeric(mnn$U3[mnn$Indicator == "Sex Drive Manifestations"] %>% substr(7, 10)))*100) %>% rnd(0),
+       ovl_global_adj_reversed = ((1-as.numeric(mnn$OVL[mnn$Indicator == "Sex Drive Manifestations"] %>% substr(7, 10)))*100) %>% rnd(0),
+       cl_global_adj_reversed = ((1-as.numeric(mnn$CL[mnn$Indicator == "Sex Drive Manifestations"] %>% substr(7, 10)))*100) %>% rnd(0),
        egger_cf_p = res_pubbias$p_egger[res_pubbias$cluster == "rs.cf"],
        egger_df_p = res_pubbias$p_egger[res_pubbias$cluster == "rs.df"],
        egger_bf_p = res_pubbias$p_egger[res_pubbias$cluster == "rs.bf"],
@@ -255,12 +260,12 @@ age_bins <- d2$rs.core %>%
   }
 
 l <- c(l, 
-       u3_global_unadj = mnn$U3[mnn$Indicator == "Primary Indicators"] %>% as.numeric %>% multiply_by(100),
-       ovl_global_unadj = mnn$OVL[mnn$Indicator == "Primary Indicators"] %>% as.numeric %>% multiply_by(100),
-       cl_global_unadj = mnn$CL[mnn$Indicator == "Primary Indicators"] %>% as.numeric %>% multiply_by(100),
-       u3_global_unadj_reversed = ((1-as.numeric(mnn$U3[mnn$Indicator == "Primary Indicators"]))*100) %>% rnd(0),
-       ovl_global_unadj_reversed = ((1-as.numeric(mnn$OVL[mnn$Indicator == "Primary Indicators"]))*100) %>% rnd(0),
-       cl_global_unadj_reversed = ((1-as.numeric(mnn$CL[mnn$Indicator == "Primary Indicators"]))*100) %>% rnd(0))
+       u3_global_unadj = mnn$U3[mnn$Indicator == "Sex Drive Manifestations"] %>% strtrim(4) %>% as.numeric %>% multiply_by(100),
+       ovl_global_unadj = mnn$OVL[mnn$Indicator == "Sex Drive Manifestations"] %>% strtrim(4) %>% as.numeric %>% multiply_by(100),
+       cl_global_unadj = mnn$CL[mnn$Indicator == "Sex Drive Manifestations"] %>% strtrim(4) %>% as.numeric %>% multiply_by(100),
+       u3_global_unadj_reversed = ((1-as.numeric(mnn$U3[mnn$Indicator == "Sex Drive Manifestations"] %>% strtrim(4)))*100) %>% rnd(0),
+       ovl_global_unadj_reversed = ((1-as.numeric(mnn$OVL[mnn$Indicator == "Sex Drive Manifestations"] %>% strtrim(4)))*100) %>% rnd(0),
+       cl_global_unadj_reversed = ((1-as.numeric(mnn$CL[mnn$Indicator == "Sex Drive Manifestations"] %>% strtrim(4)))*100) %>% rnd(0))
 
 l$perc_raw_data_primary <- str_detect(d2$rs.core$data.source, "raw") %>% table %>% prop.table %>% extract2("TRUE") %>% multiply_by(100) %>% rnd(0)
 
@@ -394,7 +399,7 @@ dat <- data.frame(num = numeric(), id = character(), val = character()) %>%
   rbind(data.frame(num = 120, id = "sum(as.numeric(mod_results$df_df) < 4, na.rm = T)", val = sum(as.numeric(mod_results$df_df) < 4, na.rm = T))) %>%  
   rbind(data.frame(num = 121, id = "sum(as.numeric(str_remove(mod_results_secondary$cf_p, "<")) < .05, na.rm = T)", val = sum(as.numeric(str_remove(mod_results_secondary$cf_p, "<")) < .05, na.rm = T))) %>%  
   rbind(data.frame(num = 122, id = "l$mr2$content$cf_regtable2$extra.pair.partner$g", val = l$mr2$content$cf_regtable2$extra.pair.partner$g)) %>%  
-  rbind(data.frame(num = 123, id = "l$mr2$content$cf_regtable2$a.partner$g", val = l$mr2$content$cf_regtable2$a.partner$g)) %>%  
+  rbind(data.frame(num = 123, id = "l$mr2$content$cf_regtable2$unspecified.partner$g", val = l$mr2$content$cf_regtable2$unspecified.partner$g)) %>%  
   rbind(data.frame(num = 124, id = "l$mr2$content$cf_regtable2$not.specified$g", val = l$mr2$content$cf_regtable2$not.specified$g)) %>%  
   rbind(data.frame(num = 125, id = "l$mr2$content$cf_modresults", val = l$mr2$content$cf_modresults)) %>%  
   rbind(data.frame(num = 126, id = "l$mr$aggregation.span$cf_modresults", val = l$mr$aggregation.span$cf_modresults)) %>%  
@@ -411,7 +416,7 @@ dat <- data.frame(num = numeric(), id = character(), val = character()) %>%
   rbind(data.frame(num = 137, id = "l$mr2$content$di_modresults", val = l$mr2$content$di_modresults)) %>%  
   rbind(data.frame(num = 138, id = "l$mr2$content$di_regtable2$not.specified$g", val =l$mr2$content$di_regtable2$not.specified$g )) %>%  
   rbind(data.frame(num = 139, id = "l$mr2$content$di_regtable2$masturbation$g", val = l$mr2$content$di_regtable2$masturbation$g)) %>%  
-  rbind(data.frame(num = 140, id = "l$mr2$content$di_regtable2$a.partner$g", val = l$mr2$content$di_regtable2$a.partner$g)) %>%  
+  rbind(data.frame(num = 140, id = "l$mr2$content$di_regtable2$unspecified.partner$g", val = l$mr2$content$di_regtable2$unspecified.partner$g)) %>%  
   rbind(data.frame(num = 141, id = "l$mr2$content$di_regtable2$own.partner$g", val = l$mr2$content$di_regtable2$own.partner$g)) %>%  
   rbind(data.frame(num = 142, id = "l$mr2$context$di_modresults", val = l$mr2$context$di_modresults)) %>%  
   rbind(data.frame(num = 143, id = "l$mr2$context$di_regtable2$romantic.situation$g", val = l$mr2$context$di_regtable2$romantic.situation$g)) %>%  
@@ -475,7 +480,12 @@ dat <- data.frame(num = numeric(), id = character(), val = character()) %>%
   rbind(data.frame(num = 201, id = "% europe", val = l$conti$Europe)) %>% 
   rbind(data.frame(num = 202, id = "% north america", val = l$conti$`North America`)) %>% 
   rbind(data.frame(num = 203, id = "% oceania", val = l$conti$Oceania)) %>% 
-  rbind(data.frame(num = 204, id = "continent_complete", val =l$conti$complete )) 
+  rbind(data.frame(num = 204, id = "continent_complete", val =l$conti$complete )) %>% 
+  rbind(data.frame(num = 205, id = "core.bf.g.adj", val =l$core.bf.g.adj )) %>%  
+  rbind(data.frame(num = 206, id = "core.df.g.adj", val =l$core.df.g.adj )) %>%  
+  rbind(data.frame(num = 207, id = "core.cf.g.adj", val =l$core.cf.g.adj )) %>%  
+  rbind(data.frame(num = 208, id = "second.di.g.adj", val =l$second.di.g.adj )) %>%  
+  rbind(data.frame(num = 209, id = "second.sd.g.adj", val =l$second.sd.g.adj )) 
 
 if(mean(dat$num == 1:nrow(dat)) != 1)stop("ERROR: SOMETHING IS WRONG WITH THE ROW NUMBERS")
 

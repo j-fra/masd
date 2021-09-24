@@ -12,9 +12,20 @@
     walk(list.files("code/functions/", full.names = T), source)
     
     load("results/es_prepared2.Rda")
+    
+    u3 <- function(b.r) b.r %>% pnorm %>% rnd_2
+    ovl <- function(b.r) (2 * pnorm((-abs(b.r)) / 2)) %>% rnd_2
+    cl <- function(b.r) pnorm(b.r / sqrt(2)) %>% rnd_2
+    
 }
 
-safe_robu_main <- function(mod, dat){
+adjust_g <- robu(g ~ cluster -1, data = d2$rs.control, studynum = id.full, var.eff.size = var.g, rho = 0.8) %>% 
+    extract2("reg_table") %>% 
+    select(b.r, SE) %>% {
+        rma(yi = .$b.r, sei = .$SE, weights = 1)} %>% 
+    extract2("b") %>% as.numeric
+
+safe_robu_main <- function(mod, dat, adj){
     tryCatch(
         {
             # mod = "publication.status"
@@ -40,15 +51,15 @@ safe_robu_main <- function(mod, dat){
                                    mutate(labels = str_replace_all(labels, "-", ".")), by = "labels") %>%
                      select(-sig) %>% 
                      transmute(labels = labels, 
-                               g = b.r %>% rnd_2, 
+                               g = if(is.na(adj))b.r %>% rnd_2 else paste0(rnd_2(b.r), " (", rnd_2(b.r - adj) , ")"), 
                                SE = SE %>% rnd_2, 
                                t = t %>% rnd_2, 
                                df = dfs %>% rnd_2, 
                                p = prob %>% rnd_p, 
                                CI95 = paste0("[", rnd_2(CI.L), ", ", rnd_2(CI.U), "]"), 
-                               U3 = b.r %>% pnorm %>% rnd_2, 
-                               OVL = (2 * pnorm((-abs(b.r)) / 2)) %>% rnd_2,
-                               CL = pnorm(b.r / sqrt(2)) %>% rnd_2,
+                               U3 =  if(is.na(adj)) u3(b.r)  else paste0(u3(b.r), " (", u3(b.r - adj), ")"), 
+                               OVL = if(is.na(adj)) ovl(b.r) else paste0(ovl(b.r), " (", ovl(b.r -adj), ")"), 
+                               CL =  if(is.na(adj)) cl(b.r)  else paste0(cl(b.r), " (", cl(b.r - adj), ")"), 
                                m = m %>% as.character, 
                                k = k %>% as.character),
                  err = NA)
@@ -58,69 +69,37 @@ safe_robu_main <- function(mod, dat){
                                  err = paste0("Error fitting model for ", mod, ". ", cond)))
 }
 
-single_es_data_adj <- list(robu(g ~ cluster -1, data = d2$rs.core, studynum = id.full, var.eff.size = var.g, rho = 0.8),
-     robu(g ~ cluster -1, data = d2$rs.control, studynum = id.full, var.eff.size = var.g, rho = 0.8)) %>% 
-    map(function(x){x %>% extract2("reg_table") %>% 
-            select(b.r, SE) %>% {
-                rma(yi = .$b.r, 
-                    sei = .$SE, 
-                    weights = 1)}}) %>% {
-                        rbind(c("Primary Sex Drive Indicators\n(Adjusted Global Summary Effect)", 
-                                rep("", 17)), 
-                                # .[[1]]$tau2 %>% rnd_2,
-                                # .[[1]]$I2 %>% rnd_2), 
-                              data.frame(
-                                  Role = "",
-                                  Indicator = "Primary Indicators (Adjusted)",
-                                  g = (round(.[[1]]$b, 2) - round(.[[2]]$b, 2)) %>% rnd_2,
-                                  SE = "", 
-                                  t = "",
-                                  df = "",
-                                  p = "",
-                                  CI95 = "",
-                                  U3 = (.[[1]]$b - .[[2]]$b) %>% pnorm %>% rnd_2,
-                                  OVL = (2 * pnorm((-abs(.[[1]]$b - .[[2]]$b)) / 2)) %>% rnd_2,
-                                  CL = pnorm((.[[1]]$b - .[[2]]$b) / sqrt(2)) %>% rnd_2,
-                                  k = length(unique(d2$rs.core$id.full)),
-                                  m = nrow(d2$rs.core),
-                                  F = "", 
-                                  df.F = "",
-                                  p.F = "", 
-                                  tau = "",  
-                                  i.sq = "", stringsAsFactors = F))
-                    }
 
 
 single_es_data <- robu(g ~ cluster -1, data = d2$rs.core, studynum = id.full, var.eff.size = var.g, rho = 0.8) %>% 
     extract2("reg_table") %>% 
-    select(b.r, SE) %>% {
-        rma(yi = .$b.r, 
-            sei = .$SE, 
-            weights = c(1,1,1))} %>% {
-                rbind(c("Primary Sex Drive Indicators\n(Global Summary Effect)", 
-                        rep("", 15), 
-                        .$tau2 %>% sqrt %>% rnd_2,
-                        .$I2 %>% rnd_2), 
-                      data.frame(
-                          Role = "",
-                          Indicator = "Primary Indicators",
-                          g = .$b %>% rnd_2,
-                          SE = .$se %>% rnd_2, 
-                          t = .$zval %>% rnd_2,
-                          df = "",
-                          p = .$pval %>% rnd_p,
-                          CI95 = paste0("[", rnd_2(.$ci.lb), ", ", rnd_2(.$ci.ub), "]"),
-                          U3 = .$b %>% pnorm %>% rnd_2,
-                          OVL = (2 * pnorm((-abs(.$b)) / 2)) %>% rnd_2,
-                          CL = pnorm(.$b / sqrt(2)) %>% rnd_2,
-                          k = length(unique(d2$rs.core$id.full)),
-                          m = nrow(d2$rs.core),
-                          F = "", 
-                          df.F = "",
-                          p.F = "", 
-                          tau = "",  
-                          i.sq = "", stringsAsFactors = F))
-            }
+    select(b.r, SE) %>% 
+    {rma(yi = .$b.r, sei = .$SE, weights = c(1,1,1))} %>% 
+    {
+        rbind(c("Sex Drive Manifestations\n(Global Summary Effect)", 
+                rep("", 15), 
+                .$tau2 %>% sqrt %>% rnd_2,
+                .$I2 %>% rnd_2), 
+              data.frame(
+                  Role = "",
+                  Indicator = "Sex Drive Manifestations",
+                  g = paste0(rnd_2(.$b), " (", rnd_2(.$b - adjust_g), ")"),
+                  SE = .$se %>% rnd_2, 
+                  t = .$zval %>% rnd_2,
+                  df = "",
+                  p = .$pval %>% rnd_p,
+                  CI95 = paste0("[", rnd_2(.$ci.lb), ", ", rnd_2(.$ci.ub), "]"),
+                  U3 = paste0(.$b %>% pnorm %>% rnd_2, " (", (.$b -adjust_g) %>% pnorm %>% rnd_2, ")"),
+                  OVL = paste0((2 * pnorm((-abs(.$b)) / 2)) %>% rnd_2, " (", (2 * pnorm((-abs(.$b - adjust_g)) / 2)) %>% rnd_2, ")"),
+                  CL = paste0(pnorm(.$b / sqrt(2)) %>% rnd_2, " (", pnorm((.$b - adjust_g) / sqrt(2)) %>% rnd_2, ")"),
+                  k = length(unique(d2$rs.core$id.full)),
+                  m = nrow(d2$rs.core),
+                  F = "", 
+                  df.F = "",
+                  p.F = "", 
+                  tau = "",  
+                  i.sq = "", stringsAsFactors = F))
+    }
 
 single_es_data_control <- robu(g ~ cluster -1, data = d2$rs.control, studynum = id.full, var.eff.size = var.g, rho = 0.8) %>% 
     extract2("reg_table") %>% 
@@ -153,9 +132,11 @@ single_es_data_control <- robu(g ~ cluster -1, data = d2$rs.control, studynum = 
                           i.sq = "", stringsAsFactors = F))}
 
 cluster_es_data <- tibble(
-    cluster = c("Primary Sex Drive Indicators", "Secondary Sex Drive Indicators", "Bias Indicators"),
-    es_data = list(d2$rs.core, d2$rs.second, d2$rs.control)) %>% 
-    mutate(out = map(es_data, safe_robu_main, mod = "cluster")) %>% 
+    cluster = c("Sex Drive Manifestations", "Indicators of Latent Sex Drive", "Bias Indicators"),
+    es_data = list(d2$rs.core, d2$rs.second, d2$rs.control),
+    adj = list(adjust_g, adjust_g, NA)
+) %>% 
+    mutate(out = map2(es_data, adj, safe_robu_main, mod = "cluster")) %>% 
     select(-es_data) %>% 
     unnest_wider(out) %>% 
     mutate(reg_table = map(reg_table, ~ split(.x, seq(nrow(.x))) %>% unname)) %>%
@@ -167,8 +148,8 @@ cluster_es_data <- tibble(
                   select(cluster, starts_with("mod.")) %>% 
                   mutate(row_role = "A_Header"), 
               by = c("cluster", "row_role")) %>% 
-    mutate(order_id = case_when(str_detect(cluster, "Primary") ~ 1,
-                                str_detect(cluster, "Second") ~ 2,
+    mutate(order_id = case_when(str_detect(cluster, "Manifest") ~ 1,
+                                str_detect(cluster, "Latent") ~ 2,
                                 str_detect(cluster, "Bias") ~ 3)) %>% 
     arrange(order_id, row_role) %>% 
     mutate(Role = cluster, Indicator = str_replace_all(labels, "\\.", " ")) %>% 
@@ -177,7 +158,23 @@ cluster_es_data <- tibble(
     mutate(Role = ifelse(is.na(Indicator), Role, "")) %>% 
     mutate_all(replace_na, "")
 
-main_analysis_data <- rbind(single_es_data, single_es_data_adj, single_es_data_control, cluster_es_data)
+
+main_analysis_data <- rbind(single_es_data, 
+                            single_es_data_control, 
+                            cluster_es_data) 
+# %>% 
+#     mutate(Indicator = recode(Indicator, 
+#                               "Primary Indicators" = "MANIF.", 
+#                               "Bias Indicators" = "BIAS", 
+#                               "Affect Frequency" = "AF", 
+#                               "Behavior Frequency" = "BF", 
+#                               "Cognition Frequency" = "CF", 
+#                               "Affect Intensity" = "AI", 
+#                               "Self Rated Sex Drive" = "SRSD", 
+#                               "Intercourse Frequency" = "SIF", 
+#                               "Sex Partners in Last Year" = "TSPY", 
+#                               "Total One Night Stand Partners" = "ONS", 
+#                               "Total Sex Partners" = "TSP" ))
 
 
 main_results <- main_analysis_data %>% 
@@ -209,19 +206,19 @@ main_analysis_table <- regulartable(main_analysis_data) %>%
     align(align = "center", part = "header") %>% 
     align(j = 1:2, align = "left", part = "header") %>% 
     width(width = 0.42) %>% 
-    width("Role", 		1.8) %>% 
-    width("Indicator", 	1.5) %>%
-    # width("g", 			0.5) %>% 
-    # width("SE", 		0.5) %>% 
-    # width("t", 			0.5) %>% 
+    width("Role", 		1.7) %>% 
+    width("Indicator", 	1.3) %>%
+    width("g", 			0.35*1.7) %>%
+    width("SE", 		0.35) %>%
+    width("t", 			0.35) %>%
     # width("df", 		0.7) %>% 
     # width("p", 			0.5) %>%
-    width("CI95", 		0.8) %>%
-    width("U3", 		0.35) %>%
-    width("OVL", 		0.4) %>%
-    width("CL", 		0.35) %>%
-    # width("k", 			0.5) %>% 
-    # width("m", 			0.5) %>% 
+    width("CI95", 		0.7) %>%
+    width("U3", 		0.4*1.7) %>%
+    width("OVL", 		0.4*1.7) %>%
+    width("CL", 		0.4*1.7) %>%
+    width("k", 			0.3) %>%
+    width("m", 			0.3) %>%
     # width("F", 			0.7) %>% 
     # width("df.F",		0.45) %>% 
     # width("p.F",		0.5) %>%
@@ -234,7 +231,7 @@ main_analysis_table <- regulartable(main_analysis_data) %>%
     italic(i = 2, j = c("g","SE","t","df","p", "CI95", "U3", "OVL", "CL", "k","m","F","df.F","p.F","tau","i.sq"), part = "header") %>% 
     add_footer_lines("") %>% 
     compose(value = as_paragraph(
-        as_i("Note. "), "Global and group-wise summary results for gender differences in primary sex drive indicators, secondary sex drive indicators, and bias indicators. ", 
+        as_i("Note. "), "Global and group-wise summary results for gender differences in sex drive manifestations, indicators of latent sex drive, and bias indicators. ", 
         as_i("g"), " = Hedges' ",  as_i("g"), " effect size. ", 
         as_i("SE"), " = standard error associated with the ", as_i("g"), "-value in the same row. ", 
         as_i("t"), " = ", as_i("t"), "-value associated with the ", as_i("g"), "-value in the same row. ", 
@@ -250,7 +247,8 @@ main_analysis_table <- regulartable(main_analysis_data) %>%
         as_i("df"), " = small sample corrected degrees of freedom. ", 
         as_i("p"), " = ", as_i("p"), "-value associated with the test statistic and ", as_i("df"), " in the same row. ",  
         as_i("I"), as_sup("2"), " = proportion of the variation in observed effects that is due to variation in true effects. ",
-        as_chunk("t", fp_text(font.size = 6, italic = T, font.family = "Symbol")), " = estimated standard deviation of the true effects. "
+        as_chunk("t", fp_text(font.size = 6, italic = T, font.family = "Symbol")), " = estimated standard deviation of the true effects. ",
+        "Values in parentheses have been bias-corrected. For the correction, the global summary effect of the bias indicators has been subtracted from the respective summary effect. "
     ), part = "footer" ) %>% 
     compose(value = as_paragraph("U", as_sub("3")), i = 1:2, j = "U3", part = "header") %>% 
     compose(value = as_paragraph("CI", as_sub("95")), i = 1:2, j = "CI95", part = "header") %>% 

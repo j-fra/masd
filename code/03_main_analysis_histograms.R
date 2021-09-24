@@ -33,8 +33,8 @@ get_hist <- function(dat, .title, .ylab = "", .xlab = "", hide_y_ticks = T){
         }
 }
 
-plot_grid(d2$rs.core %>% get_hist("Primary Sex Drive Indicators", hide_y_ticks = F, .ylab = "Density"),
-             d2$rs.second %>% get_hist("Secondary Sex Drive Indicators", .xlab = expression(paste("Hedges' ", italic("g")))),
+plot_grid(d2$rs.core %>% get_hist("Sex Drive Manifestations", hide_y_ticks = F, .ylab = "Density"),
+             d2$rs.second %>% get_hist("Indicators of Latent Sex Drive", .xlab = expression(paste("Hedges' ", italic("g")))),
              d2$rs.control %>% get_hist("Bias Indicators")
              # , d2$rs.cf %>% get_hist("Cognition Frequency", hide_y_ticks = F, .ylab = "Density"),
              # d2$rs.df %>% get_hist("Affect Frequency", .xlab = expression(paste("Hedges' ", italic("g")))),
@@ -50,4 +50,4 @@ plot_grid(d2$rs.core %>% get_hist("Primary Sex Drive Indicators", hide_y_ticks =
     ggsave(filename = "results/figures and tables/main_analysis_histograms.png", 
        width = 9, height = 3*1, units = "in", dpi = 300)
 
-.open_pdf("results/figures and tables/main_analysis_histograms.png")
+shell.exec(paste0(getwd(), "/results/figures and tables/main_analysis_histograms.png"))

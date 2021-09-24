@@ -36,9 +36,9 @@ walds <- lapply(models, Wald_test_wrapper)
 
 
 
-grid.arrange(plot.rve.cat(modvar = 'cluster', titlename = "Primary Sex Drive Indicators (Sex Drive Facets)", levelorder = c(3,1,2),
+grid.arrange(plot.rve.cat(modvar = 'cluster', titlename = "Sex Drive Manifestations", levelorder = c(3,1,2),
                           model = models[["core"]], model2 = models2[["core"]], wald = walds[["core"]]) + ylim(c(min(d2$rs$g)-0.1, max(d2$rs$g)-0.1)),
-             plot.rve.cat(modvar = 'cluster', titlename = "Secondary Sex Drive Indicators",
+             plot.rve.cat(modvar = 'cluster', titlename = "Indicators of Latent Sex Drive",
                           model = models[["second"]], model2 = models2[["second"]], wald = walds[["second"]]) + ylim(c(min(d2$rs$g)-0.1, max(d2$rs$g)-0.1)),
              plot.rve.cat(modvar = 'cluster', titlename = "Bias Indicators",
                           model = models[["control"]], model2 = models2[["control"]], wald = walds[["control"]]) + ylim(c(min(d2$rs$g)-0.1, max(d2$rs$g)-0.1)), 

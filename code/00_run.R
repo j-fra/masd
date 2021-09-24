@@ -2,13 +2,15 @@
 # This way, scripts can be run in parallel in separate R sessions, which speeds up development and avoids dependency issues with 
 # incorrectly loaded packages or objects floating around in the environment. Running the scripts that way is not strictly necessary though.
 
-# Get data.
+# Scripts are ordered by dependencies (2 on 1, 3 on 2 and 1, so on). 
+
+# 1. Get data.
 rstudioapi::jobRunScript("code/01_compute_es.R", workingDir = getwd())
 
-# Clean and prepare.
+# 2. Clean and prepare.
 rstudioapi::jobRunScript("code/02_prepare_df.R", workingDir = getwd())
 
-# Analyze. 
+# 3. Analyze. 
 rstudioapi::jobRunScript("code/03_all_items.R", workingDir = getwd())
 rstudioapi::jobRunScript("code/03_correlation_analysis.R", workingDir = getwd())
 rstudioapi::jobRunScript("code/03_distribution_overlap.R", workingDir = getwd())
@@ -28,11 +30,11 @@ rstudioapi::jobRunScript("code/03_pubbias_3PSM.R", workingDir = getwd())
 rstudioapi::jobRunScript("code/03_search_terms_item_overview.R", workingDir = getwd())
 rstudioapi::jobRunScript("code/03_theory_figure.R", workingDir = getwd())
 
-# Collect results.
+# 4. Collect results.
 rstudioapi::jobRunScript("code/04_retrieve_results.R", workingDir = getwd())
 rstudioapi::jobRunScript("code/04_moderation_plots.R", workingDir = getwd())
 
-# This is just a convienience to load the data for testing and exploration:
+# This is just a convenience to load the data for testing and exploration:
 {
     rm(list = ls())
     

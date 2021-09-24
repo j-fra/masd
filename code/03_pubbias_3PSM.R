@@ -47,4 +47,5 @@ res_pubbias <- res_egger %>%
     inner_join(res_3PSM, by = "cluster")
 
 save(res_pubbias, file = "results/res_pubbias.Rda")
+# load(file = "results/res_pubbias.Rda")
 

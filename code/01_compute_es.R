@@ -44,9 +44,10 @@ treat_outliers <- function(x, what){
          . == "count" ~ sum(is_outlier, na.rm = T),
          . == "drop" ~ list(x[!is_outlier]),
          . == "find" ~ list(x[is_outlier]))
+    # treat_outliers(rnorm(1000), "count")
 }
 
-treat_outliers(rnorm(1000), "count")
+
 
 count_outliers <- function(values){
     # values <- c(-4, rnorm(100), 4)
@@ -88,7 +89,10 @@ compute_corrs <- function(.x, .y){
                  unnest_wider(xa, names_repair = "universal") %>% 
                  mutate(label = paste0(x1, "_", x2)) %>% 
                  select(-x1, -x2)) %>% 
-        bind_cols %>%
+        {data.frame(label = .$r$label,
+                    r = .$r$r,
+                    n = .$n$n,
+                    use = .$use$use)} %>%
         filter(use & round(r, 3) != 1) %>% 
         mutate(var.r = res(r = r, n = n, verbose = F, dig = 10)$var.r) %>% 
         select(label, r, var.r, n)
