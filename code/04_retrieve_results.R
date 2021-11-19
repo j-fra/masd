@@ -276,6 +276,24 @@ l$conti <- ((table(d2$rs.core$continent) / sum(table(d2$rs.core$continent))) * 1
 
 l$conti$complete <- ((sum(!is.na(d2$rs.core$continent)))/ nrow(d2$rs.core)) %>% multiply_by(100) %>% rnd(0)
 
+compute_breakdown <- function(x){
+    # x <- d2$rs.core$nation[d2$rs.core$continent == "Europe"]
+    x %>%
+        {.[nchar(.) > 15] <- "Mixed"; .} %>% 
+        {(table(.) / sum(table(.)))*100} %>% 
+        sort(dec = T) %>% 
+        {set_names(., names(.))} %>% 
+        {if(length(.)>8)c(.[1:8], "Others" = sum(2, .[9:length(.)]))else(.)} %>%
+        {ifelse(.<1, "less than 1", rnd(., 0))} %>% 
+        {paste0(names(.),": ", ., "%", collapse = ", ")}
+}
+
+l$country.breakdowns <- d2$rs.core %>% 
+    select(continent, nation) %>% 
+    split(d2$rs.core$continent) %>% 
+    map(~.[["nation"]]) %>% 
+    map(compute_breakdown)
+
 dat <- data.frame(num = numeric(), id = character(), val = character()) %>%  
   rbind(data.frame(num = 1, id ="total.n", val =l$total.n)) %>% 
   rbind(data.frame(num = 2, id = "total.m", val = l$total.m)) %>% 
@@ -485,12 +503,17 @@ dat <- data.frame(num = numeric(), id = character(), val = character()) %>%
   rbind(data.frame(num = 206, id = "core.df.g.adj", val =l$core.df.g.adj )) %>%  
   rbind(data.frame(num = 207, id = "core.cf.g.adj", val =l$core.cf.g.adj )) %>%  
   rbind(data.frame(num = 208, id = "second.di.g.adj", val =l$second.di.g.adj )) %>%  
-  rbind(data.frame(num = 209, id = "second.sd.g.adj", val =l$second.sd.g.adj )) 
+  rbind(data.frame(num = 209, id = "second.sd.g.adj", val =l$second.sd.g.adj )) %>%  
+  rbind(data.frame(num = 210, id = "europe.breakdown", val =l$country.breakdowns$Europe ))  %>% 
+  rbind(data.frame(num = 211, id = "north.america.breakdown", val =l$country.breakdowns$`North America` )) %>%  
+  rbind(data.frame(num = 212, id = "asia.breakdown", val =l$country.breakdowns$Asia ))  %>% 
+  rbind(data.frame(num = 213, id = "oceania.breakdown", val =l$country.breakdowns$Oceania )) %>%   
+  rbind(data.frame(num = 214, id = "africa.breakdown", val =l$country.breakdowns$Africa ))   
 
 if(mean(dat$num == 1:nrow(dat)) != 1)stop("ERROR: SOMETHING IS WRONG WITH THE ROW NUMBERS")
 
 # rbind(data.frame(num = , id = "", val = )) %>% 
 
-write.xlsx(dat, "manuscript/results.xlsx")
-write.xlsx(dat, "results/results.xlsx")
+write.xlsx(dat, "manuscript/results.xlsx", overwrite = T)
+write.xlsx(dat, "results/results.xlsx", overwrite = T)
 # writexl::write_xlsx(dat, "manuscript/results.xlsx")
