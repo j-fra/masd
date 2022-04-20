@@ -38,23 +38,23 @@ plot_grid(plotlist = list(xx[[1]] + ggtitle("Cognition Frequency") + theme(plot.
                           xx[[6]] + ggtitle(" ") + ylab(" ") + xlab(" "),
                           xx[[7]] + ggtitle(" ") + xlab(" "), 
                           xx[[8]] + ggtitle(" ") + ylab(" ") + xlab("Year of Study") +theme(axis.title=element_text(size=14,face="bold")), 
-                          xx[[9]] + ggtitle(" ") + ylab(" ") + xlab(" ")), ncol = 3) + 
+                          xx[[9]] + ggtitle(" ") + ylab(" ") + xlab(" ")), ncol = 3) %>% 
     ggsave(filename = "results/figures and tables/moderation_plots_age_year_gii.png", 
            width = 10, height = 10, units = "in", dpi = 300, limitsize = FALSE)
 
 
-mutate(cluster = cluster %>% str_remove("_regplot") %>% toupper) %>% {
-    plot_grid(plotlist = c(list(blank_plot("CF", header = ""), blank_plot("DF", header = ""), blank_plot("BF", header = "")), .$regplot), ncol = 3, rel_heights = c(2, 8, 8, 8))
-}
-
-plot_grid(blank_plot(.y, "\nCognition Frequency (Controlled) - Affect Frequency - Behavior Frequency"), .x,  ncol = 1, rel_heights = c(1, 10))
-    imap(~ plot_grid(blank_plot(.y, "\nCognition Frequency (Controlled) - Affect Frequency - Behavior Frequency"), .x,  ncol = 1, rel_heights = c(1, 1))) %>%
-    {plot_grid(plotlist = ., ncol = 1,
-               rel_heights = mod_results %>% group_by(class) %>% summarize(cnt = n()) %>% select(cnt) %>% extract2(1))}
-
-
-    ggsave(filename = "manuscript/all_moderation_plots.pdf",
-           width = 18, height = nrow(mod_results) * 4.5, units = "in", dpi = 300, limitsize = FALSE)
+# mutate(cluster = cluster %>% str_remove("_regplot") %>% toupper) %>% {
+#     plot_grid(plotlist = c(list(blank_plot("CF", header = ""), blank_plot("DF", header = ""), blank_plot("BF", header = "")), .$regplot), ncol = 3, rel_heights = c(2, 8, 8, 8))
+# }
+# 
+# plot_grid(blank_plot(.y, "\nCognition Frequency (Controlled) - Affect Frequency - Behavior Frequency"), .x,  ncol = 1, rel_heights = c(1, 10))
+#     imap(~ plot_grid(blank_plot(.y, "\nCognition Frequency (Controlled) - Affect Frequency - Behavior Frequency"), .x,  ncol = 1, rel_heights = c(1, 1))) %>%
+#     {plot_grid(plotlist = ., ncol = 1,
+#                rel_heights = mod_results %>% group_by(class) %>% summarize(cnt = n()) %>% select(cnt) %>% extract2(1))}
+# 
+# 
+#     ggsave(filename = "manuscript/all_moderation_plots.pdf",
+#            width = 18, height = nrow(mod_results) * 4.5, units = "in", dpi = 300, limitsize = FALSE)
 
 # mod_results %>%
 #     transmute(label, class,

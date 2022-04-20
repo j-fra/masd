@@ -46,9 +46,8 @@ moderator_overview_data <- mlist %>%
            break1 = "", break2 = "", break3 = "", break4 = "") %>% 
     select(Moderator, break1, starts_with("Total_"), break2, starts_with("cf_"), break3, starts_with("df_"), break4, everything(), 
            -modvarname, -class, -label, -Total_Distribution) %>% 
+    mutate_all(as.character) %>% 
     mutate_all(replace_na, "")
-
-
 
 typology <- tibble(
     col_keys = names(moderator_overview_data),

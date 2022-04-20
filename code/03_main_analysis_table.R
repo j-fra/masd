@@ -21,8 +21,8 @@
 
 adjust_g <- robu(g ~ cluster -1, data = d2$rs.control, studynum = id.full, var.eff.size = var.g, rho = 0.8) %>% 
     extract2("reg_table") %>% 
-    select(b.r, SE) %>% {
-        rma(yi = .$b.r, sei = .$SE, weights = 1)} %>% 
+    select(b.r, SE)
+adjust_g <- rma(yi = adjust_g$b.r, sei = adjust_g$SE, weights = 1) %>% 
     extract2("b") %>% as.numeric
 
 safe_robu_main <- function(mod, dat, adj){
@@ -33,12 +33,12 @@ safe_robu_main <- function(mod, dat, adj){
             # dat = d2$rs.bf
             model1 <- robu(formula(paste0("g~", mod)), data = dat, studynum = id.full, var.eff.size = var.g, rho = 0.8)
             model2 <- robu(formula(paste0("g~", mod, "-1")), data = dat, studynum = id.full, var.eff.size = var.g, rho = 0.8)
-            wald <- Wald_test(model1, 2:length(model1$reg_table$labels), vcov = "CR2")
+            wald <- Wald_test(model1, clubSandwich::constrain_zero(2:length(model1$reg_table$labels)), vcov = "CR2")
             
             list(mod.i.sq = model1$mod_info$I.2 %>% extract2(1) %>% rnd_2,
                  mod.tau = model1$mod_info$tau %>% extract2(1) %>% sqrt %>% rnd_2,
                  mod.Statistic = wald$Fstat %>% rnd_2,
-                 mod.df = wald$df %>% rnd_2,
+                 mod.df = wald$df_denom %>% rnd_2,
                  mod.p = wald$p_val %>% rnd_p,
                  reg_table = model2$reg_table %>% 
                      mutate(labels = str_replace(labels, mod, "")) %>% 
@@ -73,8 +73,8 @@ safe_robu_main <- function(mod, dat, adj){
 
 single_es_data <- robu(g ~ cluster -1, data = d2$rs.core, studynum = id.full, var.eff.size = var.g, rho = 0.8) %>% 
     extract2("reg_table") %>% 
-    select(b.r, SE) %>% 
-    {rma(yi = .$b.r, sei = .$SE, weights = c(1,1,1))} %>% 
+    select(b.r, SE) 
+single_es_data <- rma(yi = single_es_data$b.r, sei = single_es_data$SE, weights = c(1,1,1)) %>% 
     {
         rbind(c("Sex Drive Manifestations\n(Global Summary Effect)", 
                 rep("", 15), 
@@ -103,33 +103,33 @@ single_es_data <- robu(g ~ cluster -1, data = d2$rs.core, studynum = id.full, va
 
 single_es_data_control <- robu(g ~ cluster -1, data = d2$rs.control, studynum = id.full, var.eff.size = var.g, rho = 0.8) %>% 
     extract2("reg_table") %>% 
-    select(b.r, SE) %>% {
-        rma(yi = .$b.r, 
-            sei = .$SE, 
-            weights = c(1,1,1,1))} %>% {
-                rbind(c("Bias Indicators\n(Global Summary Effect)", 
-                        rep("", 15), 
-                        .$tau2 %>% sqrt %>% rnd_2,
-                        .$I2 %>% rnd_2), 
-                      data.frame(
-                          Role = "",
-                          Indicator = "Bias Indicators",
-                          g = .$b %>% rnd_2,
-                          SE = .$se %>% rnd_2, 
-                          t = .$zval %>% rnd_2,
-                          df = "",
-                          p = .$pval %>% rnd_p,
-                          CI95 = paste0("[", rnd_2(.$ci.lb), ", ", rnd_2(.$ci.ub), "]"),
-                          U3 = .$b %>% pnorm %>% rnd_2,
-                          OVL = (2 * pnorm((-abs(.$b)) / 2)) %>% rnd_2,
-                          CL = pnorm(.$b / sqrt(2)) %>% rnd_2,
-                          k = length(unique(d2$rs.control$id.full)),
-                          m = nrow(d2$rs.control),
-                          F = "", 
-                          df.F = "",
-                          p.F = "", 
-                          tau = "",  
-                          i.sq = "", stringsAsFactors = F))}
+    select(b.r, SE)
+single_es_data_control <- rma(yi = single_es_data_control$b.r, 
+                              sei = single_es_data_control$SE, 
+                              weights = c(1,1,1,1)) %>% {
+                                  rbind(c("Bias Indicators\n(Global Summary Effect)", 
+                                          rep("", 15), 
+                                          .$tau2 %>% sqrt %>% rnd_2,
+                                          .$I2 %>% rnd_2), 
+                                        data.frame(
+                                            Role = "",
+                                            Indicator = "Bias Indicators",
+                                            g = .$b %>% rnd_2,
+                                            SE = .$se %>% rnd_2, 
+                                            t = .$zval %>% rnd_2,
+                                            df = "",
+                                            p = .$pval %>% rnd_p,
+                                            CI95 = paste0("[", rnd_2(.$ci.lb), ", ", rnd_2(.$ci.ub), "]"),
+                                            U3 = .$b %>% pnorm %>% rnd_2,
+                                            OVL = (2 * pnorm((-abs(.$b)) / 2)) %>% rnd_2,
+                                            CL = pnorm(.$b / sqrt(2)) %>% rnd_2,
+                                            k = length(unique(d2$rs.control$id.full)),
+                                            m = nrow(d2$rs.control),
+                                            F = "", 
+                                            df.F = "",
+                                            p.F = "", 
+                                            tau = "",  
+                                            i.sq = "", stringsAsFactors = F))}
 
 cluster_es_data <- tibble(
     cluster = c("Sex Drive Manifestations", "Indicators of Latent Sex Drive", "Bias Indicators"),

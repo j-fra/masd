@@ -44,6 +44,7 @@ moderator_overview_secondary_data <- mlist %>%
            break1 = "", break2 = "", break3 = "") %>% 
     select(Moderator, break1, starts_with("Total_"), break2, starts_with("di_"), break3, starts_with("sd_"), everything(), 
            -modvarname, -class, -label, -Total_Distribution) %>% 
+    mutate_all(as.character) %>% 
     mutate_all(replace_na, "")
 
 

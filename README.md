@@ -4,7 +4,7 @@ This readme file summarizes the data and code in the *masd*-project directory.
 Double-click this file to open the R-project. This will set your working directory to the project folder so that all relative paths should work.  
 
 # `renv.lock` (FILE)
-We used the `renv`-package for dependency management. The json-formatted `renv.lock` file lists all packages we used including their versions. When in the root-directory of the project, the packages can be installed using `renv::restore()`. 
+We used the `renv`-package for dependency management. The json-formatted `renv.lock` file lists all packages we used including their versions. When in the root-directory of the project, the packages can be installed using `renv::restore()`. Note that `renv` does not provision different versions of `R`. The project was built with `R` version 4.1.3. If future version of `R` break backwards-compatibility with some of the packages, users will need to manually install an older version of `R`.  
 
 # `results/` (FOLDER)
 This folder stores intermediate and final results objects, such as dataframes stored as .Rda objects, Word tables, or exported figures. The names of results files usually correspond to the names of the R scripts that created them. 

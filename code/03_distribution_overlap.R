@@ -1,6 +1,6 @@
 {
-    library(tidyverse)
     library(magrittr)
+    library(tidyverse)
     library(metafor)
     library(robumeta)
     library(RColorBrewer)
@@ -14,25 +14,19 @@
 }
 
 g_adj <- d2[c("rs.core", "rs.control")] %>% 
-    map(~{robu(g ~ cluster -1, data = .x, studynum = id.full, var.eff.size = var.g, rho = 0.8) %>% 
-            extract2("reg_table") %>% 
-            select(b.r, SE) %>% {
-                rma(yi = .$b.r, 
-                    sei = .$SE, 
-                    weights = 1)} %>% 
-            extract2("b") %>% 
-            c}) %>% 
+    map(~robu(g ~ cluster -1, data = .x, studynum = id.full, var.eff.size = var.g, rho = 0.8)) %>% 
+    map(~.x %>% extract2("reg_table") %>% select(b.r, SE)) %>% 
+    map(~rma(yi = .x$b.r, sei = .x$SE, weights = 1) %>% 
+            extract2("b")%>% 
+            c) %>% 
     {round(.$rs.core,2) - round(.$rs.control, 2)}
 
 g_unadj <- d2[c("rs.core", "rs.control")] %>% 
-    map(~{robu(g ~ cluster -1, data = .x, studynum = id.full, var.eff.size = var.g, rho = 0.8) %>% 
-            extract2("reg_table") %>% 
-            select(b.r, SE) %>% {
-                rma(yi = .$b.r, 
-                    sei = .$SE, 
-                    weights = 1)} %>% 
-            extract2("b") %>% 
-            c}) %>% 
+    map(~robu(g ~ cluster -1, data = .x, studynum = id.full, var.eff.size = var.g, rho = 0.8)) %>% 
+    map(~.x %>% extract2("reg_table") %>% select(b.r, SE)) %>% 
+    map(~rma(yi = .x$b.r, sei = .x$SE, weights = 1) %>% 
+            extract2("b")%>% 
+            c) %>% 
     {round(.$rs.core,2)}
 
 

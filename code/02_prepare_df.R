@@ -12,14 +12,14 @@
     load("results/es2_raw.Rda")
 }
 
-# Drop items removed during R1 -----------------------------------------------------------------------------------
+# Drop items removed during R1 ---------------------------------------------
 
 es2_remove <- es2 %>% 
     filter(grepl("Compared to other people of your age and sex", item) | 
                grepl("How would you compare your level of sex drive with that of the average person of your gender and age?", item))
 
 
-# Add study coding data ------------------------------------------------------------------------------------------
+# Add study coding data ---------------------------------------------------
 
 find_unconvertible <- function(vec){
     # find_unconvertible(vec <- c("1", "2", "b", NA))
@@ -87,8 +87,8 @@ svdata <- readxl::read_xlsx("data/coding/Sexual Violence.xlsx") %>%
     mutate_at(vars(-Country), as.numeric)
 
 # The gii and gdi datasets were downloaded from http://hdr.undp.org/ and 
-# are not included in this repository. 
 # The website does not provide stable download links to the csv files. 
+
 giidata <- read_csv2("data/coding/Gender Inequality Index (GII).csv", na = "..", skip = 1) %>% 
     mutate(Country = trimws(Country), XNA = NA) %>% 
     {set_names(., paste0("X", names(.)))} %>% 
@@ -102,13 +102,13 @@ gdidata <- read_csv2("data/coding/Gender Development Index (GDI).csv", na = ".."
     mutate_at(vars(-Country), as.numeric)
 
 # This dataset was downloaded from https://github.com/dbouquin/IS_608/blob/master/NanosatDB_munging/Countries-Continents.csv
-# and is not included in the repository. 
+
 continent_data <- read.csv("data/coding/country_continent.csv") %>% 
     rename("nation" = "Country", "continent" = "Continent") %>% 
     mutate(nation = recode(nation, "US" = "United States"))
 
 # This dataset was downloaded from https://population.un.org/wpp/Download/Files/1_Indicators%20(Standard)/EXCEL_FILES/1_Population/WPP2019_POP_F10_1_SEX_RATIO_BY_BROAD_AGE_GROUP.xlsx
-# and is not included in the repository.
+
 srdata <- read_xlsx("data/coding/UNO-Sex-ratio-age-specific.xlsx", skip = 16) %>% 
     filter(Type == "Country/Area") %>% 
     transmute(Country = `Region, subregion, country or area *`,
@@ -248,7 +248,7 @@ d2 <- split(rs2, rs2$cluster.abbr) %>% set_names(paste0("rs.", tolower(names(.))
     c(rs.second_with_outlier = rs2 %>% filter(rs2$cluster.abbr %in% c("DI", "SD")) %>% list) %>% 
     c(rs.di_with_outlier = rs2 %>% filter(rs2$cluster.abbr == "DI") %>% list) 
 
-sapply(d2, nrow) %>% View
+# sapply(d2, nrow) %>% View
     
 save(d2, file = "results/es_prepared2.Rda")
 
@@ -264,12 +264,16 @@ write.csv(d2$rs %>% select(-cor_data), "full effect size data.csv")
 #     filter(!is.na(ethn.greater.100))
 
 
-# Process correlational data
+
+# Process correlational data ----------------------------------------------
+
 
 es_cor <- d2$rs %>%
     filter(!duplicated(id.full)) %>%
-    select(id.full, cor_data) %>%
     filter(!is.na(cor_data)) %>%
+    mutate(rclass = map(cor_data, class)) %>% 
+    filter(rclass =="data.frame") %>% 
+    select(id.full, cor_data) %>%
     unnest(cor_data) %>% 
     mutate(z = fisherz(r),
            var.z = 1 / (n - 3),
@@ -284,5 +288,8 @@ es_cor <- d2$rs %>%
     mutate(r = fisherz2r(z)) %>% 
     mutate_if(is.numeric, round, 5) %>% 
     separate(label, c("x1", "x2"), "_", remove = F)
+
+
+# Save --------------------------------------------------------------------
 
 save(es_cor, file = "results/es_cor.Rda")

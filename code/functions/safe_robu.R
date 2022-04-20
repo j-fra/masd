@@ -41,17 +41,17 @@ safe_robu <- function(mod, dat, mods_info_dat, cntrl_extrapair = F){
                 model$reg_table <- model$reg_table %>% {slice(., -nrow(.))}
                 model2 <- robu(formula(paste0("g~", mod, "+cntrl_extrapair-1")), dat, id.full, var.g, rho = 0.8)
                 model2$reg_table <- model2$reg_table %>% {slice(., -nrow(.))}
-                wald <- Wald_test(model, 2:length(model$reg_table$labels), vcov = "CR2")
+                wald <- Wald_test(model, constrain_zero(2:length(model$reg_table$labels)), vcov = "CR2")
             } else if(cntrl_extrapair == F){
                 model <- robu(formula(paste0("g~", mod)), dat, id.full, var.g, rho = 0.8)
                 model2 <- robu(formula(paste0("g~", mod, "-1")), dat, id.full, var.g, rho = 0.8)
-                wald <- Wald_test(model, 2:length(model$reg_table$labels), vcov = "CR2")
+                wald <- Wald_test(model, constrain_zero(2:length(model$reg_table$labels)), vcov = "CR2")
             }
             
             list(i.sq = model$mod_info$I.2 %>% extract2(1) %>% rnd_2,
                  tau = model$mod_info$tau.sq %>% extract2(1) %>% sqrt %>% rnd_2,
                  HTZ = wald$Fstat %>% rnd_2,
-                 df = wald$df %>% rnd_2,
+                 df = wald$df_denom %>% rnd_2,
                  p = wald$p_val %>% rnd_p,
                  regtable = when(m_info$type, 
                                  . == "con" ~ model$reg_table %>% 

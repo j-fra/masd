@@ -17,8 +17,8 @@
 }
 
 Wald_test_wrapper <- function(model){
-    # This is just a short wrapper for the usual wald test of all coefficiencts.
-    Wald_test(model, 2:length(model$reg_table$labels), vcov = "CR2")
+    # This is just a short wrapper for the usual wald test of all coefficients.
+    Wald_test(model, constrain_zero(2:length(model$reg_table$labels)), vcov = "CR2")
 }
 
 models <- list(core = robu(g ~ cluster, d2$rs.core, id.full, var.g, rho = 0.8),
@@ -32,6 +32,7 @@ models2 <- list(core = robu(g ~ cluster-1, d2$rs.core, id.full, var.g, rho = 0.8
                                                                                         "Total One Night Stand Partners" = "Total One-Night Stands",
                                                                                         "Sex Partners in Last Year" = "Total Sex Partners in Last Year")), 
                                id.full, var.g, rho = 0.8))
+
 walds <- lapply(models, Wald_test_wrapper)
 
 

@@ -56,7 +56,7 @@ plot.rve.cat <- function(model,
     temp.df2$mod <- factor(temp.df2$mod, levels = levels(temp.df2$mod)[levelorder])
     
     # Collect information on overall test
-    DFval <- wald$df %>% rnd_2
+    DFval <- wald$df_denom  %>% rnd_2
     Fval <- wald$Fstat %>% rnd_2
     Pval <- wald$p_val %>% rnd_p(withEqualSign = T)
     overall.test.caption <- bquote("Overall test:" ~ italic('AHZ') * "(" * .(DFval) * ") = " * .(Fval) * ", " * italic('p ')  * .(Pval))
