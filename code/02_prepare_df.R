@@ -66,10 +66,12 @@ idat <- idat %>%
 rs <- rs %>% inner_join(idat, by = "item")
 
 # R1: recode item content "a partner" to "unspecified partner"
+# R3: recode item content "not specified" to "no target"
 
 rs <- rs %>% 
-    mutate(content = recode(content, "a partner" = "unspecified partner"))
-
+    mutate(content = recode(content, "a partner" = "unspecified partner")) %>% 
+    mutate(content = recode(content, "not specified" = "no target")) 
+rs$content
 unique(rs$content)
 
 rm(idat)

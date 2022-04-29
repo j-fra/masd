@@ -20,6 +20,8 @@
     }
 }
 
+
+
 xx <- mod_results %>% 
     filter(modvarname %in% c("year", "age.mean", "gii")) %>% 
     transmute(label, class,
@@ -27,18 +29,21 @@ xx <- mod_results %>%
               df_regplot = map(df_regplot, ~ extract2(.x, 1)),
               bf_regplot = map(bf_regplot, ~ extract2(.x, 1))) %>% 
     pivot_longer(cols = contains("regplot"), names_to = "cluster", values_to = "regplot") %>% 
-    mutate(regplot = map(regplot, ~ .x + ggtitle(NULL))) %>% 
+    mutate(regplot = map(regplot, ~ .x + 
+                             ggtitle(NULL) +        
+                             scale_y_continuous(breaks = seq(-0.25, 1.75, 0.25), 
+                                                limits = c(-0.4, 1.7)))) %>% 
     extract2("regplot")
 
-plot_grid(plotlist = list(xx[[1]] + ggtitle("Cognition Frequency") + theme(plot.title = element_text(hjust = 0.5)) + xlab(" "), 
-                          xx[[2]] + ggtitle("Affect Frequency") + theme(plot.title = element_text(hjust = 0.5))+ ylab(" ") + xlab("Mean Sample Age") +theme(axis.title=element_text(size=14,face="bold")), 
-                          xx[[3]] + ggtitle("Behavior Frequency") + theme(plot.title = element_text(hjust = 0.5))+ ylab(" ") + xlab(" "),
-                          xx[[4]] + ggtitle(" ") + xlab(" ") + xlab(" "), 
-                          xx[[5]] + ggtitle(" ") + ylab(" ") + xlab("Gender Inequality Index") +theme(axis.title=element_text(size=14,face="bold")), 
-                          xx[[6]] + ggtitle(" ") + ylab(" ") + xlab(" "),
-                          xx[[7]] + ggtitle(" ") + xlab(" "), 
-                          xx[[8]] + ggtitle(" ") + ylab(" ") + xlab("Year of Study") +theme(axis.title=element_text(size=14,face="bold")), 
-                          xx[[9]] + ggtitle(" ") + ylab(" ") + xlab(" ")), ncol = 3) %>% 
+plot_grid(plotlist = list(xx[[1]] + xlim(15, 55) + ggtitle("Cognition Frequency") + theme(plot.title = element_text(hjust = 0.5)) + xlab(" "), 
+                          xx[[2]] + xlim(15, 55) + ggtitle("Affect Frequency") + theme(plot.title = element_text(hjust = 0.5))+ ylab(" ") + xlab("Mean Sample Age") +theme(axis.title=element_text(size=14,face="bold")), 
+                          xx[[3]] + xlim(15, 55) + ggtitle("Behavior Frequency") + theme(plot.title = element_text(hjust = 0.5))+ ylab(" ") + xlab(" "),
+                          xx[[4]] + xlim(0, 0.7) + ggtitle(" ") + xlab(" ") + xlab(" "), 
+                          xx[[5]] + xlim(0, 0.7) + ggtitle(" ") + ylab(" ") + xlab("Gender Inequality Index") +theme(axis.title=element_text(size=14,face="bold")), 
+                          xx[[6]] + xlim(0, 0.7) + ggtitle(" ") + ylab(" ") + xlab(" "),
+                          xx[[7]] + xlim(1994, 2022) + ggtitle(" ") + xlab(" "), 
+                          xx[[8]] + xlim(1994, 2022) + ggtitle(" ") + ylab(" ") + xlab("Year of Study") +theme(axis.title=element_text(size=14,face="bold")), 
+                          xx[[9]] + xlim(1994, 2022) + ggtitle(" ") + ylab(" ") + xlab(" ")), ncol = 3) %>% 
     ggsave(filename = "results/figures and tables/moderation_plots_age_year_gii.png", 
            width = 10, height = 10, units = "in", dpi = 300, limitsize = FALSE)
 

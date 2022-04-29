@@ -69,17 +69,17 @@ csize <- 4
     ggplot() + 
         theme_void() + 
         geom_rect(aes(xmin = -7.2, xmax = 3, ymin = -3, ymax = 3), fill = "white", colour = "black") +
-        geom_rect(aes(xmin = -sqsize-6, xmax = sqsize-6, ymin = -sqsize, ymax = sqsize), fill = "#8CBCB9") +
-        geom_rect(aes(xmin = -sqsize-6, xmax = sqsize-6, ymin = -sqsize-1.5, ymax = sqsize-1.5), fill = "#BB513B") +
-        geom_rect(aes(xmin = -sqsize-6, xmax = sqsize-6, ymin = -sqsize+1.5, ymax = sqsize+1.5), fill = "#DDA448") +
+        geom_rect(aes(xmin = -sqsize-6, xmax = sqsize-6, ymin = -sqsize, ymax = sqsize), fill = "#3498db") +
+        geom_rect(aes(xmin = -sqsize-6, xmax = sqsize-6, ymin = -sqsize-1.5, ymax = sqsize-1.5), fill = "#e74c3c") +
+        geom_rect(aes(xmin = -sqsize-6, xmax = sqsize-6, ymin = -sqsize+1.5, ymax = sqsize+1.5), fill = "#f7dc6f") +
         geom_text(aes(-5,1.5,label="Sexual Cognition"), size = 4, hjust = 0) +
         geom_text(aes(-5,0,label="Sexual Affect"), size = 4, hjust = 0) + 
         geom_text(aes(-5,-1.5,label="Sexual Behavior"), size = 4, hjust = 0) +
         coord_fixed(),
     ggplot(dat, aes(x = time, y = y)) +
-        geom_line(aes(x, y), spline(dat$p_sc) %>% as_tibble, size = 1.2, colour = "#DDA448") + 
-        geom_line(aes(x, y), spline(dat$p_sb) %>% as_tibble, size = 1.2, colour = "#BB513B") + 
-        geom_line(aes(x, y), spline(dat$p_sa) %>% as_tibble, size = 1.2, colour = "#8CBCB9") +
+        geom_line(aes(x, y), spline(dat$p_sc) %>% as_tibble, size = 1.2, colour = "#f7dc6f") +   # 1 was #DDA448
+        geom_line(aes(x, y), spline(dat$p_sb) %>% as_tibble, size = 1.2, colour = "#e74c3c") +   # 2 was #BB513B
+        geom_line(aes(x, y), spline(dat$p_sa) %>% as_tibble, size = 1.2, colour = "#3498db") +   # 3 was #8CBCB9
         ylab("Probability of Sexual Event") +
         ylim(c(0, 1)) + 
         xlab("Time") +
@@ -102,7 +102,7 @@ csize <- 4
         geom_tile(aes(fill = factor(event, levels = c("SC", "SA", "SB"))), colour = "white") +
         theme_minimal() + 
         scale_y_discrete(limits=c("SB", "SA", "SC")) + 
-        scale_fill_manual(values=c("#DDA448", "#8CBCB9", "#BB513B")) + 
+        scale_fill_manual(values=c("#f7dc6f", "#3498db", "#e74c3c")) + 
         xlab("Time") + 
         ylab("Sexual Event") +
         guides(fill=FALSE) +
@@ -119,28 +119,3 @@ plt
 ggsave(plt, filename = "results/figures and tables/theory_figure.png", width = 10, height = 8, units = 'in', dpi = 300)
 
 shell.exec(paste0(getwd(), "/results/figures and tables/theory_figure.png"))
-
-
-# Ich schließe mich komplett an. Der Punkt ist so zentral, dass eine solch einfache Figure okay ist, aber sie wirkt tatsächlich wenig spektakulär.
-# Wenn wir von unserem theoretischen Konzept sprechen, umfasst dies am Ende immer zwei Elemente:
-#   (1) Trias
-# (2) State/Trait (Whole-Trait-Ansatz).
-# 
-# Warum nicht eine (per se neue und fancy) Figure, die beide Punkte verbindet?
-#   Basierend auf Julius' aktuellem Konzeptentwurf z. B.:
-# 
-# Ebene 1: 
-# Häufigkeit Cog-Aff-Beh (jeweils);
-# 
-# Ebene 2:
-# Kontinuierlicher State
-# 
-# --> Ebene 1 und 2 sehen aus wie aktuelle Figure 1, nur (a) mehrfach nebeneinander und (b) mit konkreten Häufigkeiten und konkreten Werten auf dem kontinuierlichen State.
-# 
-# Ebene 3:
-# Trait als Density Distribution
-# 
-# Anmerkung:
-# Eine solche Verzahnung beider Elemente muss natürlich immer zur finalen Textversion passen. Ich kann mir aber vorstellen, dass wir weitgehend unabhängig von der Nähe der Anlehnung an Fleeson eine Version finden, die beide Elemente umfasst und "fancier" ist als die aktuelle Figure 1.
-
-
